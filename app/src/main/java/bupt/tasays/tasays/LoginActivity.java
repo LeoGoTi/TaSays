@@ -1,5 +1,6 @@
 package bupt.tasays.tasays;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -43,7 +44,10 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view)
             {
                 //Logic of forget here;
-                Toast.makeText(LoginActivity.this,"You Clicked Forget.",Toast.LENGTH_SHORT).show();
+                Intent intent=new Intent(LoginActivity.this,WebActivity.class);
+                String url="http://music.163.com/song/473817115?userid=340961567";
+                intent.putExtra("destUrl",url);
+                startActivity(intent);
             }
         });
         login.setOnClickListener(new View.OnClickListener()
