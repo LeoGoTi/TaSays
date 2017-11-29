@@ -1,0 +1,26 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="60sp"
+    android:layout_gravity="bottom"
+    android:background="@drawable/navigation">
+    <ImageView
+        android:id="@+id/main_cd"
+        android:layout_width="0sp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/cd"
+        android:layout_weight="1"/>
+    <ImageView
+        android:id="@+id/main_laba"
+        android:layout_width="0sp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/laba_1"
+        android:layout_weight="1"/>
+    <ImageView
+        android:id="@+id/main_house"
+        android:layout_width="0sp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/fangzi_1"
+        android:layout_weight="1"/>
+
+
+</LinearLayout>

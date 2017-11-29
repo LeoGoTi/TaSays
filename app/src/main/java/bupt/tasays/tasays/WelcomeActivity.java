@@ -14,14 +14,9 @@ public class WelcomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ActionBar actionBar=getSupportActionBar();
-        if(actionBar!=null)
-        {
-            actionBar.hide();
-        }
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.welcome_layout);
-        ImageView imageView=(ImageView) findViewById(R.id.id_welcome);
+        ImageView imageView=findViewById(R.id.id_welcome);
         imageView.setOnClickListener(new View.OnClickListener()
         {
             @Override

@@ -17,11 +17,6 @@ public class LoginActivity extends AppCompatActivity {
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_layout);
-        ActionBar actionBar=getSupportActionBar();//隐藏标题栏和状态栏
-        if(actionBar!=null)
-        {
-            actionBar.hide();
-        }
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         TextView register,forget;
@@ -56,7 +51,9 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view)
             {
                 //Logic of login here;
-                Toast.makeText(LoginActivity.this,"You Clicked Login.",Toast.LENGTH_SHORT).show();
+                Intent intent=new Intent(LoginActivity.this,MainActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
     }
