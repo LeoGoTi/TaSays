@@ -1,14 +1,18 @@
 package bupt.tasays.tasays;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import static java.lang.Thread.sleep;
 
 public class LoginActivity extends AppCompatActivity {
     private int backPressed=0;
@@ -20,7 +24,7 @@ public class LoginActivity extends AppCompatActivity {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         TextView register,forget;
-        Button login;
+        final Button login;
         register = findViewById(R.id.login_register);
         forget   = findViewById(R.id.login_forget);
         login    = findViewById(R.id.login_button);
@@ -51,9 +55,40 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view)
             {
                 //Logic of login here;
-                Intent intent=new Intent(LoginActivity.this,MainActivity.class);
-                startActivity(intent);
-                finish();
+                final Intent intent=new Intent(LoginActivity.this,MainActivity.class);
+
+                final ProgressDialog progressDialog=new ProgressDialog(LoginActivity.this);
+                progressDialog.setTitle("登陆中");
+                progressDialog.setMessage("请稍等……");
+                progressDialog.setCancelable(false);
+                progressDialog.show();
+                /*下面开启新线程*/
+                new Thread(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        // TODO Auto-generated method stub
+                        int i = 0;
+
+                        while (i<100) {
+                            try
+                            {
+                                Log.d("LoginActivity", "run: ");
+                                i++;
+                                sleep(10);
+                            }
+                            catch (Exception e) {
+                                // TODO: handle exception
+                            }
+                        }
+                        // 在进度条走完时删除Dialog,进入下一个活动
+                        progressDialog.dismiss();
+                        startActivity(intent);
+                        finish();
+
+                    }
+                }).start();
+
             }
         });
     }
