@@ -4,27 +4,6 @@
     android:layout_gravity="bottom"
     android:background="@drawable/navigation">
     <LinearLayout
-        android:id="@+id/main_music"
-        android:orientation="vertical"
-        android:layout_width="0sp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1">
-        <ImageView
-            android:id="@+id/main_music_p"
-            android:layout_width="wrap_content"
-            android:layout_height="0sp"
-            android:src="@drawable/yinyue_1"
-            android:layout_weight="2"
-            android:layout_marginTop="5sp"
-            android:layout_marginBottom="5sp"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="0sp"
-            android:layout_weight="1"
-            android:text="音乐"
-            android:gravity="center"/>
-    </LinearLayout>
-    <LinearLayout
         android:id="@+id/main_home"
         android:orientation="vertical"
         android:layout_width="0sp"
@@ -37,7 +16,8 @@
             android:src="@drawable/zhuye"
             android:layout_weight="2"
             android:layout_marginTop="5sp"
-            android:layout_marginBottom="5sp"/>
+            android:layout_marginBottom="5sp"
+            android:layout_gravity="top|center"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="0sp"
@@ -45,7 +25,50 @@
             android:text="主页"
             android:gravity="center"/>
     </LinearLayout>
-
+    <LinearLayout
+        android:id="@+id/main_music"
+        android:orientation="vertical"
+        android:layout_width="0sp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+        <ImageView
+            android:id="@+id/main_music_p"
+            android:layout_width="wrap_content"
+            android:layout_height="0sp"
+            android:src="@drawable/yinyue_1"
+            android:layout_weight="2"
+            android:layout_marginTop="5sp"
+            android:layout_marginBottom="5sp"
+            android:layout_gravity="top|center"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0sp"
+            android:layout_weight="1"
+            android:text="音乐"
+            android:gravity="center"/>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/main_mood"
+        android:orientation="vertical"
+        android:layout_width="0sp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+        <ImageView
+            android:id="@+id/main_mood_p"
+            android:layout_width="wrap_content"
+            android:layout_height="0sp"
+            android:src="@drawable/xinqing_1"
+            android:layout_weight="2"
+            android:layout_marginTop="5sp"
+            android:layout_marginBottom="5sp"
+            android:layout_gravity="top|center"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0sp"
+            android:layout_weight="1"
+            android:text="心情"
+            android:gravity="center"/>
+    </LinearLayout>
     <LinearLayout
         android:id="@+id/main_personal"
         android:orientation="vertical"
@@ -59,7 +82,8 @@
             android:src="@drawable/geren_1"
             android:layout_weight="2"
             android:layout_marginTop="5sp"
-            android:layout_marginBottom="5sp"/>
+            android:layout_marginBottom="5sp"
+            android:layout_gravity="top|center"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="0sp"
