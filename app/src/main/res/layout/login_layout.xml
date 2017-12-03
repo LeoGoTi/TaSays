@@ -28,7 +28,9 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="10sp"
         android:layout_marginRight="10sp"
-        android:hint="请输入用户名"/>
+        android:hint="请输入用户名"
+        android:maxLength="16"
+        android:maxLines="1"/>
 
     <EditText
         android:id="@+id/login_password"
@@ -37,7 +39,8 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="10sp"
         android:layout_marginRight="10sp"
-        android:hint="请输入密码"/>
+        android:hint="请输入密码"
+        android:maxLength="16"/>
 
 
     <Button
