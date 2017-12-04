@@ -20,6 +20,6 @@
         <item name="android:background">@color/black_overlay</item>
     </style>
 
-    <style name="FruitActivityTheme" parent="AppTheme"></style>
+    <style name="trans" parent="AppTheme"></style>
 
 </resources>

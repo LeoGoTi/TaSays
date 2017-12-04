@@ -2,15 +2,14 @@ package bupt.tasays.tasays;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.EditText;
 
 import static java.lang.Thread.sleep;
 
@@ -73,9 +72,8 @@ public class LoginActivity extends AppCompatActivity {
                         while (i<100) {
                             try
                             {
-                                Log.d("LoginActivity", "run: ");
+                                sleep(20);
                                 i++;
-                                sleep(10);
                             }
                             catch (Exception e) {
                                 // TODO: handle exception
@@ -85,9 +83,9 @@ public class LoginActivity extends AppCompatActivity {
                         progressDialog.dismiss();
                         startActivity(intent);
                         finish();
-
                     }
                 }).start();
+
 
             }
         });

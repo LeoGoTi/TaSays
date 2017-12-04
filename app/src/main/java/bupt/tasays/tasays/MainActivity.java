@@ -3,12 +3,14 @@ package bupt.tasays.tasays;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 public class MainActivity extends AppCompatActivity {
    LinearLayout i1,i2,i3,i4;
    ImageView p1,p2,p3,p4;
+   FrameLayout f4;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -18,6 +20,9 @@ public class MainActivity extends AppCompatActivity {
         p2=findViewById(R.id.main_music_p);
         p3=findViewById(R.id.main_mood_p);
         p4=findViewById(R.id.main_personal_p);
+
+        f4=findViewById(R.id.main_personal_frag);
+        f4.setVisibility(View.INVISIBLE);
 
         i1=findViewById(R.id.main_home);
         i1.setOnClickListener(new View.OnClickListener()
@@ -29,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
                 p2.setImageResource(R.drawable.yinyue_1);
                 p3.setImageResource(R.drawable.xinqing_1);
                 p4.setImageResource(R.drawable.geren_1);
+                f4.setVisibility(View.INVISIBLE);
             }
         });
         i2=findViewById(R.id.main_music);
@@ -41,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
                 p2.setImageResource(R.drawable.yinyue );
                 p3.setImageResource(R.drawable.xinqing_1);
                 p4.setImageResource(R.drawable.geren_1);
+                f4.setVisibility(View.INVISIBLE);
             }
         });
         i3=findViewById(R.id.main_mood);
@@ -53,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
                 p2.setImageResource(R.drawable.yinyue_1);
                 p3.setImageResource(R.drawable.xinqing);
                 p4.setImageResource(R.drawable.geren_1);
+                f4.setVisibility(View.INVISIBLE);
             }
         });
         i4=findViewById(R.id.main_personal);
@@ -65,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
                 p2.setImageResource(R.drawable.yinyue_1);
                 p3.setImageResource(R.drawable.xinqing_1);
                 p4.setImageResource(R.drawable.geren);
+                f4.setVisibility(View.VISIBLE);
             }
         });
     }
