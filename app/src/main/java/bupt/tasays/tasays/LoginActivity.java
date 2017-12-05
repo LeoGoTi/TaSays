@@ -72,7 +72,7 @@ public class LoginActivity extends AppCompatActivity {
                         while (i<100) {
                             try
                             {
-                                sleep(20);
+                                sleep(2);
                                 i++;
                             }
                             catch (Exception e) {

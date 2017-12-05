@@ -3,14 +3,17 @@ package bupt.tasays.tasays;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener{
    LinearLayout i1,i2,i3,i4;
    ImageView p1,p2,p3,p4;
-   FrameLayout f4;
+    MoodFragment moodFragment=new MoodFragment();
+    PersonalFragment personalFragment=new PersonalFragment();
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -21,60 +24,62 @@ public class MainActivity extends AppCompatActivity {
         p3=findViewById(R.id.main_mood_p);
         p4=findViewById(R.id.main_personal_p);
 
-        f4=findViewById(R.id.main_personal_frag);
-        f4.setVisibility(View.INVISIBLE);
-
         i1=findViewById(R.id.main_home);
-        i1.setOnClickListener(new View.OnClickListener()
+        i2=findViewById(R.id.main_music);
+        i3=findViewById(R.id.main_mood);
+        i4=findViewById(R.id.main_personal);
+
+        i1.setOnClickListener(this);
+        i2.setOnClickListener(this);
+        i3.setOnClickListener(this);
+        i4.setOnClickListener(this);
+
+
+    }
+
+    @Override
+    public void onClick(View v)
+    {
+        switch (v.getId())
         {
-            @Override
-            public void onClick(View view)
-            {
+            case R.id.main_home:
                 p1.setImageResource(R.drawable.zhuye);
                 p2.setImageResource(R.drawable.yinyue_1);
                 p3.setImageResource(R.drawable.xinqing_1);
                 p4.setImageResource(R.drawable.geren_1);
-                f4.setVisibility(View.INVISIBLE);
-            }
-        });
-        i2=findViewById(R.id.main_music);
-        i2.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
+                break;
+            case R.id.main_music:
                 p1.setImageResource(R.drawable.zhuye_1);
-                p2.setImageResource(R.drawable.yinyue );
+                p2.setImageResource(R.drawable.yinyue);
                 p3.setImageResource(R.drawable.xinqing_1);
                 p4.setImageResource(R.drawable.geren_1);
-                f4.setVisibility(View.INVISIBLE);
-            }
-        });
-        i3=findViewById(R.id.main_mood);
-        i3.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
+                break;
+            case R.id.main_mood:
                 p1.setImageResource(R.drawable.zhuye_1);
                 p2.setImageResource(R.drawable.yinyue_1);
                 p3.setImageResource(R.drawable.xinqing);
                 p4.setImageResource(R.drawable.geren_1);
-                f4.setVisibility(View.INVISIBLE);
-            }
-        });
-        i4=findViewById(R.id.main_personal);
-        i4.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
+                replaceFragment(moodFragment);
+                break;
+            case R.id.main_personal:
                 p1.setImageResource(R.drawable.zhuye_1);
                 p2.setImageResource(R.drawable.yinyue_1);
                 p3.setImageResource(R.drawable.xinqing_1);
                 p4.setImageResource(R.drawable.geren);
-                f4.setVisibility(View.VISIBLE);
-            }
-        });
+                replaceFragment(personalFragment);
+                break;
+            default:
+                break;
+
+
+        }
+    }
+
+    private void replaceFragment(Fragment fragment)
+    {
+        FragmentManager fragmentManager=getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.main_content,fragment);
+        transaction.commit();
     }
 }
