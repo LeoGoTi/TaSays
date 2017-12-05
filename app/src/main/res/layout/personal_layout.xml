@@ -272,8 +272,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:src="@mipmap/ic_comment"
+            android:src="@drawable/config"
             app:layout_anchor="@id/appBar"
-            app:layout_anchorGravity="bottom|end" />
+            app:layout_anchorGravity="bottom|end"
+            app:backgroundTint="@color/cyan50"/>
     </android.support.design.widget.CoordinatorLayout>
 </FrameLayout>
