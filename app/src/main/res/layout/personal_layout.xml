@@ -206,14 +206,16 @@
                     app:cardElevation="1dp">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
                         android:drawableLeft="@drawable/clean"
                         android:drawableStart="@drawable/clean"
-                        android:gravity="center"
+                        android:gravity="left"
                         android:text="  清理缓存"
-                        android:textSize="20dp" />
+                        android:textSize="20dp"
+                        android:drawableRight="@drawable/archer"
+                        android:drawableEnd="@drawable/archer"/>
 
                 </android.support.v7.widget.CardView>
 
