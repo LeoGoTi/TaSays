@@ -112,7 +112,7 @@
                         android:drawableStart="@drawable/account"
                         android:gravity="center"
                         android:text="  昵称      人称LMS"
-                        android:textSize="20dp" />
+                        android:textSize="20sp" />
 
                 </android.support.v7.widget.CardView>
 

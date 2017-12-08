@@ -79,6 +79,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     {
         FragmentManager fragmentManager=getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.setCustomAnimations(R.animator.fragment_slide_right_in, R.animator.fragment_slide_left_out,
+                R.animator.fragment_slide_left_in, R.animator.fragment_slide_right_out);
         transaction.replace(R.id.main_content,fragment);
         transaction.commit();
     }
