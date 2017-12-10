@@ -22,9 +22,10 @@
         </activity>
         <activity android:name=".LoginActivity" />
         <activity android:name=".WebActivity" />
-        <activity android:name=".MainActivity"
-            android:theme="@style/trans">
-        </activity>
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/trans"></activity>
+        <activity android:name=".TimePickerTest"></activity>
     </application>
 
 </manifest>

@@ -1,8 +1,8 @@
-<LinearLayout android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
@@ -14,33 +14,37 @@
         app:cardBackgroundColor="@color/grey50"
         app:cardCornerRadius="4dp"
         app:cardElevation="1dp">
+
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:drawableLeft="@drawable/account"
-            android:drawableStart="@drawable/account"
-            android:gravity="center"
-            android:text="  昵称         "
-            android:textSize="20sp" />
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:drawableLeft="@drawable/account"
+                android:drawableStart="@drawable/account"
+                android:gravity="center"
+                android:text="  昵称         "
+                android:textSize="20sp" />
+
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@null"
                 android:layout_gravity="center"
-                android:textSize="20sp"
+                android:background="@null"
                 android:hint="人称LMS"
                 android:maxLength="8"
                 android:maxLines="1"
-                android:singleLine="true"/>
+                android:singleLine="true"
+                android:textSize="20sp" />
         </LinearLayout>
 
 
     </android.support.v7.widget.CardView>
+
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -51,10 +55,12 @@
         app:cardBackgroundColor="@color/grey50"
         app:cardCornerRadius="4dp"
         app:cardElevation="1dp">
+
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -64,15 +70,109 @@
                 android:gravity="center"
                 android:text="  个性签名 "
                 android:textSize="20sp" />
+
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@null"
                 android:layout_gravity="center"
-                android:textSize="20sp"
+                android:background="@null"
                 android:hint="还有谁在快乐的，继续歌唱"
                 android:maxLength="20"
-                android:maxLines="2"/>
+                android:maxLines="2"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="1dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="5dp"
+        app:cardBackgroundColor="@color/grey50"
+        app:cardCornerRadius="4dp"
+        app:cardElevation="1dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:drawableLeft="@drawable/gender"
+                android:drawableStart="@drawable/gender"
+                android:gravity="center"
+                android:text="  性别"
+                android:textSize="20sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="男"
+                android:textSize="20sp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="45dp"
+                android:layout_marginStart="45dp"/>
+
+            <CheckBox
+                android:id="@+id/is_male"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:checked="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:text="女"
+                android:textSize="20sp" />
+
+            <CheckBox
+                android:id="@+id/is_famale"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="1dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="5dp"
+        app:cardBackgroundColor="@color/grey50"
+        app:cardCornerRadius="4dp"
+        app:cardElevation="1dp">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:drawableLeft="@drawable/birth"
+            android:drawableStart="@drawable/birth"
+            android:gravity="center"
+            android:text="  生日"
+            android:textSize="20sp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:layout_gravity="center"
+            android:text="1990年 1月 1日"
+            android:layout_marginLeft="45dp"
+            android:layout_marginStart="45sp"/>
         </LinearLayout>
 
 
@@ -90,52 +190,7 @@
         app:cardElevation="1dp">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:drawableLeft="@drawable/gender"
-            android:drawableStart="@drawable/gender"
-            android:gravity="center"
-            android:text="  性别           男"
-            android:textSize="20dp" />
-
-    </android.support.v7.widget.CardView>
-
-    <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="1dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="5dp"
-        app:cardBackgroundColor="@color/grey50"
-        app:cardCornerRadius="4dp"
-        app:cardElevation="1dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:drawableLeft="@drawable/birth"
-            android:drawableStart="@drawable/birth"
-            android:gravity="center"
-            android:text="  生日           1990年1月1日"
-            android:textSize="20dp" />
-
-    </android.support.v7.widget.CardView>
-
-    <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="1dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="5dp"
-        app:cardBackgroundColor="@color/grey50"
-        app:cardCornerRadius="4dp"
-        app:cardElevation="1dp">
-
-        <TextView
+            android:id="@+id/constellation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
@@ -146,8 +201,6 @@
             android:textSize="20dp" />
 
     </android.support.v7.widget.CardView>
-
-
 
 
 </LinearLayout>

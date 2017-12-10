@@ -57,6 +57,12 @@ public class PersonalFragment extends Fragment
         super.onResume();
         replaceFragment(personalInfo);
     }
+    @Override
+    public void onStart()
+    {
+        super.onStart();
+        replaceFragment(personalInfo);
+    }
 
     private void replaceFragment(Fragment fragment)
     {
