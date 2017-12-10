@@ -1,7 +1,10 @@
 package bupt.tasays.tasays;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -35,11 +38,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         i4.setOnClickListener(this);
 
 
+
     }
 
     @Override
     public void onClick(View v)
     {
+        String s=Integer.toString(v.getId());
+        Log.d("MainActivity", s);
         switch (v.getId())
         {
             case R.id.main_home:
@@ -68,9 +74,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 p4.setImageResource(R.drawable.geren);
                 replaceFragment(personalFragment);
                 break;
+
             default:
                 break;
-
 
         }
     }
@@ -79,8 +85,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     {
         FragmentManager fragmentManager=getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.setCustomAnimations(R.animator.fragment_slide_right_in, R.animator.fragment_slide_left_out,
-                R.animator.fragment_slide_left_in, R.animator.fragment_slide_right_out);
         transaction.replace(R.id.main_content,fragment);
         transaction.commit();
     }

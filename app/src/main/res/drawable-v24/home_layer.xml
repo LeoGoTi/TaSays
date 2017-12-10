@@ -1,0 +1,130 @@
+<!-- Style for "0" -->
+<!-- Add this snippet to layer-list xml in drawable. -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+<item android:width="540dp" android:height="960dp">
+    <shape android:shape="rectangle">
+    </shape>
+</item>
+
+    <!-- Style for "6" -->
+    <!-- Add this snippet to layer-list xml in drawable. -->
+<item android:width="540dp" android:height="106dp">
+<shape android:shape="rectangle">
+</shape>
+</item>
+
+    <!-- Style for "1" -->
+    <!-- Add this snippet to layer-list xml in drawable. -->
+<item android:width="414dp" android:height="49dp">
+<shape android:shape="rectangle">
+    <stroke android:width="2dp" android:color="#c0c5b1" />
+    <solid android:color="#e1e5e4" />
+</shape>
+</item>
+
+    <!-- Style for "7" -->
+    <!-- Add this snippet to layer-list xml in drawable. -->
+<item android:width="32dp" android:height="37dp">
+<shape android:shape="rectangle">
+</shape>
+</item>
+
+
+
+    <!-- Style for "9" -->
+    <!-- Add this snippet to layer-list xml in drawable. -->
+<item android:width="47dp" android:height="51dp">
+<shape android:shape="rectangle">
+</shape>
+</item>
+
+    <!-- Style for "10" -->
+    <!-- Add this snippet to layer-list xml in drawable. -->
+<item android:width="506dp" android:height="252dp">
+<shape android:shape="rectangle">
+</shape>
+</item>
+
+    <!-- Style for "12" -->
+    <!-- Add this snippet to layer-list xml in drawable. -->
+<item android:width="131dp" android:height="120dp">
+<shape android:shape="rectangle">
+</shape>
+</item>
+
+
+
+    <!-- Style for "13" -->
+    <!-- Add this snippet to layer-list xml in drawable. -->
+<item android:width="357dp" android:height="120dp">
+<shape android:shape="rectangle">
+</shape>
+</item>
+
+    <!-- Style for "14" -->
+    <!-- Add this snippet to layer-list xml in drawable. -->
+<item android:width="132dp" android:height="121dp">
+<shape android:shape="rectangle">
+</shape>
+</item>
+
+
+
+    <!-- Style for "15" -->
+    <!-- Add this snippet to layer-list xml in drawable. -->
+<item android:width="356dp" android:height="121dp">
+<shape android:shape="rectangle">
+</shape>
+</item>
+
+    <!-- Style for "16" -->
+    <!-- Add this snippet to layer-list xml in drawable. -->
+<item android:width="131dp" android:height="123dp">
+<shape android:shape="rectangle">
+</shape>
+</item>
+
+
+
+    <!-- Style for "17" -->
+    <!-- Add this snippet to layer-list xml in drawable. -->
+<item android:width="357dp" android:height="123dp">
+<shape android:shape="rectangle">
+</shape>
+</item>
+
+    <!-- Style for "1" -->
+    <!-- Add this snippet to layer-list xml in drawable. -->
+<item android:width="540dp" android:height="99dp">
+<shape android:shape="rectangle">
+</shape>
+</item>
+
+    <!-- Style for "5" -->
+    <!-- Add this snippet to layer-list xml in drawable. -->
+<item android:width="70dp" android:height="73dp">
+<shape android:shape="rectangle">
+</shape>
+</item>
+
+    <!-- Style for "4" -->
+    <!-- Add this snippet to layer-list xml in drawable. -->
+<item android:width="80dp" android:height="73dp">
+<shape android:shape="rectangle">
+</shape>
+</item>
+
+    <!-- Style for "3" -->
+    <!-- Add this snippet to layer-list xml in drawable. -->
+<item android:width="71dp" android:height="73dp">
+<shape android:shape="rectangle">
+</shape>
+</item>
+
+    <!-- Style for "2" -->
+    <!-- Add this snippet to layer-list xml in drawable. -->
+<item android:width="76dp" android:height="73dp">
+<shape android:shape="rectangle">
+</shape>
+</item>
+</layer-list>

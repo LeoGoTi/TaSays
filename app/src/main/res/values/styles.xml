@@ -21,5 +21,37 @@
     </style>
 
     <style name="trans" parent="AppTheme"></style>
+    <!-- Text style "" -->
+    <!-- Add this snippet to styles.xml. -->
+    <style name="test">
+        <item name="android:typeface">normal</item>
+        <item name="android:textColor">#56737e</item>
+        <item name="android:textSize">50sp</item>
+        <item name="android:gravity">left</item>
+    </style>
+    <!-- Text style "" -->
+    <!-- Add this snippet to styles.xml. -->
+    <style name="test2">
+        <item name="android:typeface">normal</item>
+        <item name="android:textColor">#305671</item>
+        <item name="android:textSize">50sp</item>
+        <item name="android:gravity">left</item>
+    </style>
+    <!-- Text style "" -->
+    <!-- Add this snippet to styles.xml. -->
+    <style name="test3">
+        <item name="android:typeface">normal</item>
+        <item name="android:textColor">#352876</item>
+        <item name="android:textSize">50sp</item>
+        <item name="android:gravity">left</item>
+    </style>
+    <!-- Text style "" -->
+    <!-- Add this snippet to styles.xml. -->
+    <style name="test4">
+        <item name="android:typeface">normal</item>
+        <item name="android:textColor">#212721</item>
+        <item name="android:textSize">36sp</item>
+        <item name="android:gravity">center</item>
+    </style>
 
 </resources>
