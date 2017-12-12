@@ -1,6 +1,87 @@
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_home_frame"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/grey300">
 
-</RelativeLayout>
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50sp"
+                android:layout_margin="5dp"
+                android:background="@drawable/search"
+                android:orientation="horizontal"
+                android:focusable="true"
+                android:focusableInTouchMode="true">
+
+                <EditText
+                    android:id="@+id/search_home"
+                    android:layout_width="0sp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="20sp"
+                    android:layout_marginStart="20sp"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:gravity="start|center_vertical"
+                    android:hint="发现Ta说"/>
+
+                <FrameLayout
+                    android:id="@+id/search_home_button"
+                    android:layout_width="20sp"
+                    android:layout_height="20sp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="10sp"
+                    android:layout_marginRight="10sp"
+                    android:background="@drawable/mirror">
+
+                </FrameLayout>
+
+            </LinearLayout>
+
+            <!-->
+            以下ImageView用滚动图片控件实现
+            <!-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:background="@color/grey300">
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="20dp"
+                    app:cardElevation="5dp"
+                    app:cardCornerRadius="10dp">
+                    <ImageView
+                        android:id="@+id/main_photo"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/photo"/>
+
+                </android.support.v7.widget.CardView>
+
+            </LinearLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/main_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="70dp">
+
+            </android.support.v7.widget.RecyclerView>
+
+        </LinearLayout>
+
+
+    </android.support.design.widget.CoordinatorLayout>
+</FrameLayout>

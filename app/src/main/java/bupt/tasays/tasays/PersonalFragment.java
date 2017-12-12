@@ -50,8 +50,8 @@ public class PersonalFragment extends Fragment
         });
         return view;
     }
-
-    @Override
+/*
+    @Overridea  
     public void onResume()
     {
         super.onResume();
@@ -63,12 +63,19 @@ public class PersonalFragment extends Fragment
         super.onStart();
         replaceFragment(personalInfo);
     }
-
+*/
     private void replaceFragment(Fragment fragment)
     {
         FragmentManager fragmentManager=getActivity().getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.personal_content,fragment);
         transaction.commit();
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState)
+    {
+        super.onActivityCreated(savedInstanceState);
+        replaceFragment(new PersonalInfo());
     }
 }

@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         i2.setOnClickListener(this);
         i3.setOnClickListener(this);
         i4.setOnClickListener(this);
+        replaceFragment(homeFragment);
 
 
 
@@ -55,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 p2.setImageResource(R.drawable.yinyue_1);
                 p3.setImageResource(R.drawable.xinqing_1);
                 p4.setImageResource(R.drawable.geren_1);
-                //replaceFragment(homeFragment);
+                replaceFragment(homeFragment);
                 break;
             case R.id.main_music:
                 p1.setImageResource(R.drawable.zhuye_1);
