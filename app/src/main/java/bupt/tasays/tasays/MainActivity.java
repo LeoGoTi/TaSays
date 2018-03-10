@@ -11,6 +11,9 @@ import android.widget.LinearLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import org.json.JSONObject;
+
+import bupt.tasays.web_sql.WebService;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
    LinearLayout i1,i2,i3,i4;
@@ -19,6 +22,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
    MusicFragment musicFragment=new MusicFragment();
     MoodFragment moodFragment=new MoodFragment();
     PersonalFragment personalFragment=new PersonalFragment();
+    private String account;
+    private JSONObject jsonObject=new JSONObject();
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -39,9 +44,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         i3.setOnClickListener(this);
         i4.setOnClickListener(this);
         replaceFragment(homeFragment);
-
-
-
+        account=getIntent().getStringExtra("account");
+        String json=WebService.executeGetPersonalInfo("PersonalInfoLet","account");
     }
 
     @Override
