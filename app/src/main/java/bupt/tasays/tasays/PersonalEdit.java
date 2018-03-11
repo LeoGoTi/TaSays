@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,12 +31,16 @@ public class PersonalEdit extends Fragment implements NumberPickerView.OnValueCh
     private TextView birth;
     private NumberPickerView year,month,day;
     private RadioButton isMale,isFamale;
+    private EditText nickname,signature;
     private int birthY=1990,birthM=1,birthD=1;
     private boolean is_male=true;
+    MainActivity mainActivity=(MainActivity)getActivity();
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         View view = inflater.inflate(R.layout.personal_edit, container, false);
         constellation=view.findViewById(R.id.constellation);
+        nickname=view.findViewById(R.id.nicknameE);
+        signature=view.findViewById(R.id.signatureE);
         birth=view.findViewById(R.id.birth);
         isMale=view.findViewById(R.id.is_male);
         isFamale=view.findViewById(R.id.is_famale);
@@ -68,6 +73,7 @@ public class PersonalEdit extends Fragment implements NumberPickerView.OnValueCh
                 is_male=false;
             }
         });
+        refreshInfo();
         return view;
     }
 
@@ -246,4 +252,32 @@ public class PersonalEdit extends Fragment implements NumberPickerView.OnValueCh
         constellation.setText(con);
     }
 
+    public void refreshInfo(){
+        try {
+            mainActivity = (MainActivity) getActivity();
+            signature.setText(mainActivity.getPersonalString("introduction"));
+            nickname.setText(mainActivity.getPersonalString("nickname"));
+            isMale.setChecked((mainActivity.getPersonalString("gender").equals("1")));
+            isFamale.setChecked(!(mainActivity.getPersonalString("gender").equals("1")));
+            birthD=mainActivity.getPersonalInt("birthD");
+            birthM=mainActivity.getPersonalInt("birthM");
+            birthY=mainActivity.getPersonalInt("birthY");
+            birth.setText(Integer.toString(birthY)+"年"+Integer.toString(birthM)+"月"+Integer.toString(birthD)+"日");
+            setConstellation();
+        }
+        catch (Exception e){
+
+        }
+    }
+
+    //更新信息到主活动
+    public void refreshToMain(){
+        mainActivity.setBirthD(birthD);
+        mainActivity.setBirthM(birthM);
+        mainActivity.setBirthY(birthY);
+        mainActivity.setNickname(nickname.getText().toString());
+        mainActivity.setIntroduction(signature.getText().toString());
+        mainActivity.setGender(isMale.isChecked()?"1":"0");
+        mainActivity.setConstellation(constellation.getText().toString());
+    }
 }

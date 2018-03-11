@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,9 +24,14 @@ public class PersonalFragment extends Fragment
     private PersonalEdit personaledit=new PersonalEdit();
     private boolean editFlag=false;
     private FloatingActionButton floatingActionButton;
+    private TextView signature,userId;//此处仅需要更新这两个信息
+    private MainActivity mainActivity=(MainActivity) getActivity();
+    private int birthY=1990,birthM=1,birthD=1;
+    private View fragmentView,view;
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        View view = inflater.inflate(R.layout.personal_layout, container, false);
+        view = inflater.inflate(R.layout.personal_layout, container, false);
+        fragmentView=inflater.inflate(R.layout.personal_info, container, false);
         replaceFragment(personalInfo);
         floatingActionButton=view.findViewById(R.id.edit_float_button);
 
@@ -42,28 +48,20 @@ public class PersonalFragment extends Fragment
                 }
                 else
                 {
+                    personaledit.refreshToMain();
                     replaceFragment(personalInfo);
                     floatingActionButton.setImageResource(R.drawable.signatureright);
+                    updatePersonalInfo();
                     editFlag = !editFlag;
                 }
+                refresh2();
             }
         });
+        refresh2();
         return view;
     }
-/*
-    @Overridea  
-    public void onResume()
-    {
-        super.onResume();
-        replaceFragment(personalInfo);
-    }
-    @Override
-    public void onStart()
-    {
-        super.onStart();
-        replaceFragment(personalInfo);
-    }
-*/
+
+
     private void replaceFragment(Fragment fragment)
     {
         FragmentManager fragmentManager=getActivity().getSupportFragmentManager();
@@ -76,6 +74,24 @@ public class PersonalFragment extends Fragment
     public void onActivityCreated(Bundle savedInstanceState)
     {
         super.onActivityCreated(savedInstanceState);
-        replaceFragment(new PersonalInfo());
+        replaceFragment(personalInfo);
+    }
+
+    private void refresh2(){
+        try {
+            signature = view.findViewById(R.id.signature);
+            userId = view.findViewById(R.id.user_id);
+            mainActivity = (MainActivity) getActivity();
+            signature.setText(mainActivity.getPersonalString("introduction"));
+            userId.setText(mainActivity.getPersonalString("phonenum"));
+        }
+        catch(Exception e)
+        {
+
+        }
+    }
+
+    public void updatePersonalInfo(){
+
     }
 }

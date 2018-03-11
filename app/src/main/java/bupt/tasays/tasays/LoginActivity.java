@@ -40,7 +40,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //Logic of register here;
-                Toast.makeText(LoginActivity.this, "You Clicked Register.", Toast.LENGTH_SHORT).show();
+                intent=new Intent(LoginActivity.this,RegisterActivity.class);
             }
         });
         forget.setOnClickListener(new View.OnClickListener() {

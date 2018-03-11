@@ -31,6 +31,7 @@
                 android:textSize="20sp" />
 
             <EditText
+                android:id="@+id/nicknameE"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -72,6 +73,7 @@
                 android:textSize="20sp" />
 
             <EditText
+                android:id="@+id/signatureE"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
