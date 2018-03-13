@@ -41,6 +41,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //Logic of register here;
                 intent=new Intent(LoginActivity.this,RegisterActivity.class);
+                startActivity(intent);
             }
         });
         forget.setOnClickListener(new View.OnClickListener() {

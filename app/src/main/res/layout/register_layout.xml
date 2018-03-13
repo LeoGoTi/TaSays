@@ -23,6 +23,17 @@
         android:gravity="bottom"
         android:layout_weight="1">
         <EditText
+            android:id="@+id/reg_phonenum"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10sp"
+            android:layout_marginRight="10sp"
+            android:hint="  请输入手机号"
+            android:maxLength="16"
+            android:maxLines="1"
+            android:drawableStart="@drawable/account"
+            android:drawableLeft="@drawable/account" />
+        <EditText
             android:id="@+id/reg_account"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
