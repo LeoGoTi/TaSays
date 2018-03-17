@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,6 +24,8 @@ public class LoginActivity extends AppCompatActivity {
     private static Handler handler = new Handler();
     private ProgressDialog progressDialog;
     private Intent intent;
+    private CheckBox remember,auto;
+    private boolean isRemembered=false,isAuto=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +40,8 @@ public class LoginActivity extends AppCompatActivity {
         login = findViewById(R.id.login_button);
         account = findViewById(R.id.login_account);
         password = findViewById(R.id.login_password);
+        remember=findViewById(R.id.login_remember);
+        auto=findViewById(R.id.login_auto);
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -69,6 +75,20 @@ public class LoginActivity extends AppCompatActivity {
                 new Thread(new MyThread()).start();
             }
         });
+        remember.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                isRemembered=remember.isChecked();
+            }
+        });
+        auto.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                isRemembered=isAuto=auto.isChecked();
+                remember.setChecked(isRemembered);
+            }
+        });
+
     }
 
     public class MyThread implements Runnable {

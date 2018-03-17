@@ -28,11 +28,12 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="10sp"
         android:layout_marginRight="10sp"
-        android:hint="  请输入用户名"
+        android:hint="请输入用户名"
         android:maxLength="16"
-        android:maxLines="1"
+        android:singleLine="true"
         android:drawableStart="@drawable/account"
-        android:drawableLeft="@drawable/account" />
+        android:drawableLeft="@drawable/account"
+        android:drawablePadding="8dp"/>
 
     <EditText
         android:id="@+id/login_password"
@@ -41,11 +42,36 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="10sp"
         android:layout_marginRight="10sp"
-        android:hint="  请输入密码"
+        android:hint="请输入密码"
         android:maxLength="16"
         android:drawableStart="@drawable/password"
-        android:drawableLeft="@drawable/password"/>
+        android:drawableLeft="@drawable/password"
+        android:drawablePadding="8dp"/>
 
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp">
+        <CheckBox
+            android:id="@+id/login_remember"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="记住密码"
+            android:textSize="18sp"
+            android:textColor="@color/grey600"/>
+        <CheckBox
+            android:id="@+id/login_auto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginStart="30dp"
+            android:text="自动登陆"
+            android:textSize="18sp"
+            android:textColor="@color/grey600"/>
+    </LinearLayout>
 
     <Button
         android:id="@+id/login_button"

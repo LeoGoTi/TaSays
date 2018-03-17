@@ -27,5 +27,19 @@ public class WelcomeActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        new Thread(new Thread(){
+            @Override
+            public void run(){
+                try{
+                    sleep(2000);
+                    Intent intent=new Intent(WelcomeActivity.this,LoginActivity.class);
+                    startActivity(intent);
+                }catch(InterruptedException e){
+                    e.printStackTrace();
+                }
+
+            }
+        }).start();
     }
 }
