@@ -25,7 +25,9 @@
         <activity android:name=".RegisterActivity"/>
         <activity
             android:name=".MainActivity"
-            android:theme="@style/trans"></activity>
+            android:theme="@style/trans">
+
+        </activity>
         <activity android:name=".TimePickerTest"></activity>
     </application>
 

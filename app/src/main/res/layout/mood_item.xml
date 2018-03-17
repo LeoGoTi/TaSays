@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/mood_item_mood"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:src="@drawable/happy"
+        android:layout_marginLeft="85dp"
+        android:layout_marginStart="85dp"/>
+    <LinearLayout
+        android:orientation="vertical"
+        android:id="@+id/mood_item_line"
+        android:layout_width="5sp"
+        android:layout_height="130sp"
+        android:layout_below="@id/mood_item_mood"
+        android:layout_marginLeft="119dp"
+        android:layout_marginStart="119dp"
+        android:background="@color/blue300">
+
+    </LinearLayout>
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/mood_item_mood"
+        android:layout_marginBottom="20sp">
+
+        <TextView
+            android:id="@+id/mood_item_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5sp"
+            android:text="12月7日"
+            android:textSize="17sp" />
+    </FrameLayout>
+    <TextView
+        android:id="@+id/mood_item_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/mood_item_mood"
+        android:layout_toEndOf="@id/mood_item_mood"
+        android:layout_toRightOf="@id/mood_item_mood"
+        android:background="@drawable/bubble2"
+        android:gravity="center"
+        android:text="被私信了！感觉受到了莫大的宠幸\n"
+        android:textColor="@color/cyan50"
+        android:textSize="18sp"
+        android:layout_margin="5dp">
+
+    </TextView>
+
+</RelativeLayout>

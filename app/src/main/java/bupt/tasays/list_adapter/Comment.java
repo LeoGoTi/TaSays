@@ -1,4 +1,4 @@
-package bupt.tasays.tasays;
+package bupt.tasays.list_adapter;
 
 /**
  * Created by root on 17-12-12.

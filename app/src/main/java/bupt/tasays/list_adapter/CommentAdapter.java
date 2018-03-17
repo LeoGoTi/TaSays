@@ -1,4 +1,4 @@
-package bupt.tasays.tasays;
+package bupt.tasays.list_adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,6 +8,8 @@ import android.widget.TextView;
 
 
 import java.util.List;
+
+import bupt.tasays.tasays.R;
 
 /**
  * Created by root on 17-12-12.
