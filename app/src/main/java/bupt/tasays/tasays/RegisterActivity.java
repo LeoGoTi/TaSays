@@ -1,10 +1,14 @@
 package bupt.tasays.tasays;
 
 import android.os.Bundle;
+import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import bupt.tasays.web_sql.WebService;
 
 /**
  * Created by root on 18-3-11.
@@ -24,8 +28,34 @@ public class RegisterActivity extends AppCompatActivity{
         reg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                account.setHint("请输入好吗别搞我！！！");
+                if(!checkRegNull()) {
+                    new Thread(new regThread()).start();
+                }
+                else
+                    Toast.makeText(RegisterActivity.this,"请完整填写注册信息",Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public class regThread implements Runnable{
+        String result;
+        @Override
+        public void run(){
+            result=WebService.executeRegister("RegLet",account.getText().toString(),password.getText().toString(),phonenum.getText().toString());
+            // 似乎会报错
+            Looper.prepare();
+            Toast.makeText(RegisterActivity.this, result, Toast.LENGTH_SHORT).show();
+            Looper.loop();
+        }
+    }
+
+    public boolean checkRegNull(){
+        if(account.getText().toString().equals(""))
+            return true;
+        if(password.getText().toString().equals(""))
+            return true;
+        if(phonenum.getText().toString().equals(""))
+            return true;
+        return false;
     }
 }
