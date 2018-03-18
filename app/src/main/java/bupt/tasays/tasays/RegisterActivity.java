@@ -1,5 +1,6 @@
 package bupt.tasays.tasays;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
@@ -42,9 +43,15 @@ public class RegisterActivity extends AppCompatActivity{
         @Override
         public void run(){
             result=WebService.executeRegister("RegLet",account.getText().toString(),password.getText().toString(),phonenum.getText().toString());
-            // 似乎会报错
             Looper.prepare();
             Toast.makeText(RegisterActivity.this, result, Toast.LENGTH_SHORT).show();
+            if(result.equals("注册成功")){
+                Intent intent=new Intent();
+                intent.putExtra("account",account.getText().toString());
+                intent.putExtra("password",password.getText().toString());
+                setResult(RESULT_OK,intent);
+                finish();
+            }
             Looper.loop();
         }
     }

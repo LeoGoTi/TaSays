@@ -88,15 +88,16 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0sp"
-        android:gravity="bottom|center"
+        android:gravity="top|center"
         android:layout_weight="1">
 
         <TextView
             android:id="@+id/login_forget"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:textSize="15sp"
-            android:textColor="#4040f0"
+            android:textColor="@color/cyan600"
             android:text="忘记密码  "
             android:gravity="bottom|right"/>
 
@@ -105,6 +106,7 @@
             android:layout_height="wrap_content"
             android:text="|"
             android:textSize="20sp"
+            android:layout_marginTop="20dp"
             android:textColor="#000000"
             android:gravity="bottom|center"/>
 
@@ -112,8 +114,9 @@
             android:id="@+id/login_register"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:textSize="15sp"
-            android:textColor="#4040f0"
+            android:textColor="@color/cyan600"
             android:text="  注册新用户"
             android:gravity="bottom|left"/>
     </LinearLayout>

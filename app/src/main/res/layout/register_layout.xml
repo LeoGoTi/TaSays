@@ -24,36 +24,41 @@
         android:layout_weight="1">
         <EditText
             android:id="@+id/reg_phonenum"
+            android:inputType="number"
+            android:drawablePadding="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10sp"
             android:layout_marginRight="10sp"
-            android:hint="  请输入手机号"
+            android:hint="请输入手机号"
             android:maxLength="16"
-            android:maxLines="1"
+            android:singleLine="true"
             android:drawableStart="@drawable/account"
-            android:drawableLeft="@drawable/account" />
+            android:drawableLeft="@drawable/account"/>
         <EditText
             android:id="@+id/reg_account"
+            android:drawablePadding="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10sp"
             android:layout_marginRight="10sp"
-            android:hint="  请输入用户名"
+            android:hint="请输入用户名"
             android:maxLength="16"
-            android:maxLines="1"
+            android:singleLine="true"
             android:drawableStart="@drawable/account"
-            android:drawableLeft="@drawable/account" />
+            android:drawableLeft="@drawable/account"/>
 
         <EditText
+            android:drawablePadding="8dp"
             android:id="@+id/reg_password"
             android:inputType="textPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10sp"
             android:layout_marginRight="10sp"
-            android:hint="  请输入密码"
+            android:hint="请输入密码"
             android:maxLength="16"
+            android:singleLine="true"
             android:drawableStart="@drawable/password"
             android:drawableLeft="@drawable/password"/>
 

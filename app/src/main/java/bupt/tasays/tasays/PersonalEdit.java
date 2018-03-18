@@ -2,6 +2,7 @@ package bupt.tasays.tasays;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Looper;
 import android.os.Message;
 import android.support.v4.app.Fragment;
@@ -13,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -275,8 +277,10 @@ public class PersonalEdit extends Fragment implements NumberPickerView.OnValueCh
         mainActivity.setBirthD(birthD);
         mainActivity.setBirthM(birthM);
         mainActivity.setBirthY(birthY);
-        mainActivity.setNickname(nickname.getText().toString());
-        mainActivity.setIntroduction(signature.getText().toString());
+        if(!nickname.getText().toString().equals(""))
+            mainActivity.setNickname(nickname.getText().toString());
+        if(!signature.getText().toString().equals(""))
+            mainActivity.setIntroduction(signature.getText().toString());
         mainActivity.setGender(isMale.isChecked()?"1":"0");
         mainActivity.setConstellation(constellation.getText().toString());
     }

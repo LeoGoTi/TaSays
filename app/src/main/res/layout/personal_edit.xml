@@ -36,7 +36,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:background="@null"
-                android:hint="人称LMS"
+                android:hint="输入昵称"
                 android:maxLength="8"
                 android:maxLines="1"
                 android:singleLine="true"
@@ -78,7 +78,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:background="@null"
-                android:hint="还有谁在快乐的，继续歌唱"
+                android:hint="输入个性签名"
                 android:maxLength="20"
                 android:singleLine="true"
                 android:textSize="20sp" />

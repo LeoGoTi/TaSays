@@ -23,6 +23,7 @@ import bupt.tasays.list_adapter.MoodLineAdapter;
 public class MoodFragment extends Fragment {
     private static List<MoodLine> moodLineList=new ArrayList<>();
     static MoodLineAdapter adapter;
+    private int added=0;
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         View view = inflater.inflate(R.layout.mood_layout, container, false);
@@ -31,10 +32,10 @@ public class MoodFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         adapter=new MoodLineAdapter(moodLineList);
         recyclerView.setAdapter(adapter);
-        moodLineList.add(new MoodLine(R.drawable.happy,"12月7日","单曲循环一整天\n"));
-        moodLineList.add(new MoodLine(R.drawable.happy,"12月7日","单曲循环一整天\n"));
-        moodLineList.add(new MoodLine(R.drawable.happy,"12月7日","单曲循环一整天\n"));
-        moodLineList.add(new MoodLine(R.drawable.happy,"12月7日","单曲循环一整天\n"));
+        do{
+            moodLineList.add(new MoodLine(R.drawable.happy,"12月7日","单曲循环一整天\n"));
+            added++;
+        }while(added<10);
         return view;
     }
 

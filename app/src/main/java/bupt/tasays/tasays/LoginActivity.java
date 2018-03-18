@@ -25,6 +25,7 @@ public class LoginActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;
     private Intent intent;
     private CheckBox remember,auto;
+    private Button login;
     private boolean isRemembered=false,isAuto=false;
 
     @Override
@@ -34,7 +35,7 @@ public class LoginActivity extends AppCompatActivity {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         TextView register, forget;
-        final Button login;
+
         register = findViewById(R.id.login_register);
         forget = findViewById(R.id.login_forget);
         login = findViewById(R.id.login_button);
@@ -47,7 +48,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //Logic of register here;
                 intent=new Intent(LoginActivity.this,RegisterActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent,1);
             }
         });
         forget.setOnClickListener(new View.OnClickListener() {
@@ -119,5 +120,18 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(LoginActivity.this, "再次点击退出", Toast.LENGTH_SHORT).show();
         } else
             finish();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch(requestCode){
+            case 1:
+                if(resultCode==RESULT_OK) {
+                    account.setText(data.getStringExtra("account"));
+                    password.setText(data.getStringExtra("password"));
+                    login.performClick();
+
+                }
+        }
     }
 }

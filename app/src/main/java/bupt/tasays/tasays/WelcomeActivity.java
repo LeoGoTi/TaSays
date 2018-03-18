@@ -10,6 +10,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 
 public class WelcomeActivity extends AppCompatActivity {
+    boolean ok=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +23,7 @@ public class WelcomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v)
             {
+                ok=!ok;
                 Intent intent=new Intent(WelcomeActivity.this,LoginActivity.class);
                 startActivity(intent);
                 finish();
@@ -33,8 +35,11 @@ public class WelcomeActivity extends AppCompatActivity {
             public void run(){
                 try{
                     sleep(2000);
-                    Intent intent=new Intent(WelcomeActivity.this,LoginActivity.class);
-                    startActivity(intent);
+                    if(!ok){
+                        Intent intent=new Intent(WelcomeActivity.this,LoginActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
                 }catch(InterruptedException e){
                     e.printStackTrace();
                 }
