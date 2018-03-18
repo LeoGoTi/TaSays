@@ -33,7 +33,8 @@
         android:singleLine="true"
         android:drawableStart="@drawable/account"
         android:drawableLeft="@drawable/account"
-        android:drawablePadding="8dp"/>
+        android:drawablePadding="8dp"
+        android:theme="@style/MyEditText"/>
 
     <EditText
         android:id="@+id/login_password"
@@ -46,7 +47,8 @@
         android:maxLength="16"
         android:drawableStart="@drawable/password"
         android:drawableLeft="@drawable/password"
-        android:drawablePadding="8dp"/>
+        android:drawablePadding="8dp"
+        android:theme="@style/MyEditText"/>
 
     <LinearLayout
         android:orientation="horizontal"

@@ -53,7 +53,8 @@
         <item name="android:textSize">36sp</item>
         <item name="android:gravity">center</item>
     </style>
-
-
-
+    <style name="MyEditText" parent="Theme.AppCompat.Light">
+        <item name="colorControlNormal">@color/grey600</item>
+        <item name="colorControlActivated">@color/cyan700</item>
+    </style>
 </resources>

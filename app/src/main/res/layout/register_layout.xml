@@ -34,7 +34,8 @@
             android:maxLength="16"
             android:singleLine="true"
             android:drawableStart="@drawable/account"
-            android:drawableLeft="@drawable/account"/>
+            android:drawableLeft="@drawable/account"
+            android:theme="@style/MyEditText"/>
         <EditText
             android:id="@+id/reg_account"
             android:drawablePadding="8dp"
@@ -46,7 +47,8 @@
             android:maxLength="16"
             android:singleLine="true"
             android:drawableStart="@drawable/account"
-            android:drawableLeft="@drawable/account"/>
+            android:drawableLeft="@drawable/account"
+            android:theme="@style/MyEditText"/>
 
         <EditText
             android:drawablePadding="8dp"
@@ -60,7 +62,8 @@
             android:maxLength="16"
             android:singleLine="true"
             android:drawableStart="@drawable/password"
-            android:drawableLeft="@drawable/password"/>
+            android:drawableLeft="@drawable/password"
+            android:theme="@style/MyEditText"/>
 
 
         <Button

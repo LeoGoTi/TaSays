@@ -11,6 +11,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import bupt.tasays.DB_Direct.DBManager;
@@ -31,7 +33,7 @@ import static android.content.ContentValues.TAG;
  * Created by root on 17-12-11.
  */
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment{
     private static List<Comment> commentList = new ArrayList<>();
     private static List<View> viewList=new ArrayList<>();
     View view;
@@ -40,14 +42,16 @@ public class HomeFragment extends Fragment {
     private static Handler handler;
     static CommentAdapter adapter;
     static AdapterViewpager adapterViewpager;
-
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.home_layout, container, false);
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.main_recycler);
+        FrameLayout frameLayout=view.findViewById(R.id.main_home_frame);
+        final EditText editText=view.findViewById(R.id.search_home);
+        frameLayout.setFocusable(true);
+        frameLayout.setFocusableInTouchMode(true);
         ViewPager viewPager=view.findViewById(R.id.view_pager);
         CircleIndicator circleIndicator=view.findViewById(R.id.indicator);
         adapterViewpager=new AdapterViewpager(viewList);
-
         if(!added)addAd();
         viewPager.setAdapter(adapterViewpager);
         circleIndicator.setViewPager(viewPager);
