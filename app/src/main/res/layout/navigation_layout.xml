@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="70sp"
     android:layout_gravity="bottom"
-    android:background="@drawable/navigation"
+    android:background="@color/cyan50"
     android:baselineAligned="false">
 
     <LinearLayout

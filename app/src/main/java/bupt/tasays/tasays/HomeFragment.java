@@ -81,7 +81,7 @@ public class HomeFragment extends Fragment {
                             resultSet.absolute(11);
                             tempContent = resultSet.getString("content");
                             tempCommentInfo = "在 "+resultSet.getString("singername")+"-"+resultSet.getString("songname")+" 后的热评";
-                            commentList.add(new Comment(tempContent, "T@", tempCommentInfo+"\n\n\n\n\n\n"));
+                            commentList.add(new Comment(tempContent, "T@", tempCommentInfo+""));
                             adapter.notifyDataSetChanged();
                         } catch (SQLException e) {
                             e.printStackTrace();

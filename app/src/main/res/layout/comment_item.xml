@@ -4,7 +4,8 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="10dp"
-    android:layout_margin="5dp">
+    android:layout_margin="5dp"
+    app:cardBackgroundColor="@color/grey50">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -12,7 +13,7 @@
             android:id="@+id/comment_item_port"
             android:layout_width="70dp"
             android:layout_height="70dp"
-            android:src="@drawable/port"
+            android:src="@drawable/user_default"
             android:layout_margin="5dp"/>
         <RelativeLayout
             android:id="@+id/comment_item_rl"
@@ -26,9 +27,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
-                android:text="人称LMS"
+                android:text="用户"
                 android:layout_centerVertical="true"/>
             <ImageView
+                android:id="@+id/comment_item_gender"
                 android:layout_width="17dp"
                 android:layout_height="17dp"
                 android:src="@drawable/gender0"

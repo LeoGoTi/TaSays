@@ -4,7 +4,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import java.util.List;
@@ -23,13 +25,18 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         TextView commentContent;
         TextView commentUser;
         TextView commentSong;
+        ImageView love;
+        ImageView share;
 
         public ViewHolder(View view)
         {
             super(view);
-            commentContent=(TextView)view.findViewById(R.id.main_item_comment);
-            commentUser=(TextView)view.findViewById(R.id.comment_id);
-            commentSong=(TextView)view.findViewById(R.id.song_name);
+            commentContent=(TextView)view.findViewById(R.id.comment_item_content);
+            commentUser=(TextView)view.findViewById(R.id.comment_item_nickname);
+            commentSong=(TextView)view.findViewById(R.id.comment_item_songinfo);
+            love=view.findViewById(R.id.comment_item_love);
+            share=view.findViewById(R.id.comment_item_share);
+
         }
     }
 
@@ -42,8 +49,9 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
     public ViewHolder onCreateViewHolder(ViewGroup parent,int viewtype)
     {
         View view= LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.main_item,parent,false);
-        ViewHolder holder= new ViewHolder(view);
+                .inflate(R.layout.comment_item,parent,false);
+        final ViewHolder holder= new ViewHolder(view);
+
         return holder;
     }
 
