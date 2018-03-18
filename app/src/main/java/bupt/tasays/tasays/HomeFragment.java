@@ -48,7 +48,7 @@ public class HomeFragment extends Fragment {
         CircleIndicator circleIndicator=view.findViewById(R.id.indicator);
         adapterViewpager=new AdapterViewpager(viewList);
 
-        addAd();
+        if(!added)addAd();
         viewPager.setAdapter(adapterViewpager);
         circleIndicator.setViewPager(viewPager);
 
@@ -66,7 +66,6 @@ public class HomeFragment extends Fragment {
     public static class MyHandler extends Handler{
         @Override
         public void handleMessage(Message msg){
-            Log.d(TAG, "handleMessage: 处理一哈");
             switch(msg.what){
                 case 1:
                     if(!added){

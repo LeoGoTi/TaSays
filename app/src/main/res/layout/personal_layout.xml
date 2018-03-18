@@ -104,6 +104,6 @@
             android:src="@drawable/pencil1"
             app:layout_anchor="@id/appBar"
             app:layout_anchorGravity="bottom|end"
-            app:backgroundTint="@color/blue800"/>
+            app:backgroundTint="@color/grey50"/>
     </android.support.design.widget.CoordinatorLayout>
 </FrameLayout>
