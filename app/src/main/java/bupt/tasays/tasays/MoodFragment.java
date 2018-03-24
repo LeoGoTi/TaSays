@@ -1,6 +1,8 @@
 package bupt.tasays.tasays;
 
 import android.content.DialogInterface;
+import android.os.Handler;
+import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -12,13 +14,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
 import bupt.tasays.list_adapter.MoodLine;
 import bupt.tasays.list_adapter.MoodLineAdapter;
-import cn.carbswang.android.numberpickerview.library.NumberPickerView;
+import bupt.tasays.web_sql.GetPrivateCommentsThread;
+import bupt.tasays.web_sql.PostCommentThread;
 
 
 /**
@@ -26,14 +30,18 @@ import cn.carbswang.android.numberpickerview.library.NumberPickerView;
  */
 
 public class MoodFragment extends Fragment {
-    private static List<MoodLine> moodLineList=new ArrayList<>();
+    private static List<MoodLine> moodLineList=new ArrayList<>(50);
+    private static List<MoodLine> moodLineListTemp=new ArrayList<>(50);
     static MoodLineAdapter adapter;
-    private int added=0;
     FloatingActionButton floatingActionButton;
+    RecyclerView recyclerView;
+    MainActivity mainActivity;
+    private static Handler handler;
+    private GetPrivateCommentsThread getPrivateCommentsThread;
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         View view = inflater.inflate(R.layout.mood_layout, container, false);
-        RecyclerView recyclerView=view.findViewById(R.id.mood_recycler);
+        recyclerView=view.findViewById(R.id.mood_recycler);
         floatingActionButton=view.findViewById(R.id.mood_write);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,10 +49,22 @@ public class MoodFragment extends Fragment {
                 showDialog();
             }
         });
+        mainActivity=(MainActivity)getActivity();
         LinearLayoutManager layoutManager=new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         adapter=new MoodLineAdapter(moodLineList);
         recyclerView.setAdapter(adapter);
+        handler=new MyHandler();
+        try {
+            //开始从服务器载入之前清除已存在的
+            moodLineList.clear();
+            getPrivateCommentsThread = new GetPrivateCommentsThread(handler, mainActivity.getPersonalString("account"));
+            getPrivateCommentsThread.start();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+
         /*
         加载静态数据用的
         do{
@@ -75,11 +95,53 @@ public class MoodFragment extends Fragment {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         EditText editText=layout.findViewById(R.id.mood_write_edit);
                         Calendar calendar = Calendar.getInstance();
-                        int month = calendar.get(Calendar.MONTH);
+                        int month = calendar.get(Calendar.MONTH)+1;
                         int day = calendar.get(Calendar.DAY_OF_MONTH);
+                        moodLineListTemp.addAll(moodLineList);
+                        moodLineList.clear();
                         moodLineList.add(new MoodLine(R.drawable.happy,month+"月"+day+"日",editText.getText().toString()+"\n"));
+                        moodLineList.addAll(moodLineListTemp);
+                        moodLineListTemp.clear();
+                        moodLineListTemp.addAll(moodLineList);
+                        adapter=new MoodLineAdapter(moodLineList);
+                        recyclerView.setAdapter(adapter);
+                        try {
+                            new Thread(new PostCommentThread(mainActivity.getPersonalString("account"),editText.getText().toString(),"好" )).start();
+                        }
+                        catch(Exception e)
+                        {
+                            e.printStackTrace();
+                        }
                     }
                 });
         builder.show();
+    }
+
+    public static class MyHandler extends Handler{
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what){
+                case 1:
+                    try{
+                        ResultSet resultSet=(ResultSet)msg.obj;
+                        String tempContent,tempClass2;
+                        String tempTime;
+                        while(resultSet.next()){
+                            tempContent=resultSet.getString("content");
+                            tempTime=resultSet.getString("time");
+                            tempClass2=resultSet.getString("class2");
+                            String str=tempTime.substring(4,8);
+                            moodLineList.add(new MoodLine(R.drawable.happy,str.substring(0,2)+"月"+str.substring(2,4)+"日",tempContent));
+                            adapter.notifyDataSetChanged();
+
+                        }
+                    }
+                    catch (Exception e){
+                        e.printStackTrace();
+                    }
+                    break;
+                case 0:break;
+            }
+        }
     }
 }

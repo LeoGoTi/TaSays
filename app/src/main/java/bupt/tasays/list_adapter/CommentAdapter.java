@@ -27,6 +27,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         TextView commentSong;
         ImageView love;
         ImageView share;
+        boolean loved=false;
 
         public ViewHolder(View view)
         {
@@ -51,12 +52,25 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         View view= LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.comment_item,parent,false);
         final ViewHolder holder= new ViewHolder(view);
+        holder.love.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!holder.loved){
+                    holder.love.setImageResource(R.drawable.loved);
+                    holder.loved=true;
+                }
+                else {
+                    holder.love.setImageResource(R.drawable.love);
+                    holder.loved=false;
+                }
+            }
+        });
 
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder,int position)
+    public void onBindViewHolder(final ViewHolder holder, int position)
     {
         Comment comment=mCommentList.get(position);
         holder.commentContent.setText(comment.getComment());

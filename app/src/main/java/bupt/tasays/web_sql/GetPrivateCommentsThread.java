@@ -5,23 +5,27 @@ import android.os.Handler;
 import java.sql.ResultSet;
 
 import bupt.tasays.DB_Direct.DBManager;
+
 /**
- * Created by root on 18-3-17.
+ * Created by root on 18-3-24.
  */
 
-public class GetCommentsThread extends Thread{
+public class GetPrivateCommentsThread extends Thread{
     private Handler handler;
     private int SUCCESS=1;
     private int FAILURE=0;
     private DBManager dbManager;
+    String account;
     String sql;
 
-    public GetCommentsThread(Handler handler){
+    public GetPrivateCommentsThread(Handler handler,String account){
         this.handler=handler;
+        this.account=account;
     }
     @Override
     public void run(){
-        sql = "SELECT content,songname,singername from comments,songinfos where comments.songid=songinfos.songid order by rand();";
+        sql = "SELECT content,time,class2 from comments,users\n" +
+                "where userid=ID and account='"+account+"' ORDER BY time DESC ;";
         dbManager = DBManager.createInstance();
         dbManager.connectDB();
         ResultSet resultSet = dbManager.executeQuery(sql);
