@@ -9,6 +9,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.ldoublem.thumbUplib.ThumbUpView;
+
 import java.util.List;
 
 import bupt.tasays.tasays.R;
@@ -25,9 +27,8 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         TextView commentContent;
         TextView commentUser;
         TextView commentSong;
-        ImageView love;
+        ThumbUpView love;
         ImageView share;
-        boolean loved=false;
 
         public ViewHolder(View view)
         {
@@ -52,19 +53,6 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         View view= LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.comment_item,parent,false);
         final ViewHolder holder= new ViewHolder(view);
-        holder.love.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(!holder.loved){
-                    holder.love.setImageResource(R.drawable.loved);
-                    holder.loved=true;
-                }
-                else {
-                    holder.love.setImageResource(R.drawable.love);
-                    holder.loved=false;
-                }
-            }
-        });
 
         return holder;
     }

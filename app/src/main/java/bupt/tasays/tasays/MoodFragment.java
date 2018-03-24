@@ -97,14 +97,14 @@ public class MoodFragment extends Fragment {
                         Calendar calendar = Calendar.getInstance();
                         int month = calendar.get(Calendar.MONTH)+1;
                         int day = calendar.get(Calendar.DAY_OF_MONTH);
+                        moodLineListTemp.clear();
                         moodLineListTemp.addAll(moodLineList);
                         moodLineList.clear();
                         moodLineList.add(new MoodLine(R.drawable.happy,month+"月"+day+"日",editText.getText().toString()+"\n"));
                         moodLineList.addAll(moodLineListTemp);
-                        moodLineListTemp.clear();
-                        moodLineListTemp.addAll(moodLineList);
-                        adapter=new MoodLineAdapter(moodLineList);
-                        recyclerView.setAdapter(adapter);
+                        //adapter=new MoodLineAdapter(moodLineList);
+                        //recyclerView.setAdapter(adapter);
+                        adapter.notifyDataSetChanged();
                         try {
                             new Thread(new PostCommentThread(mainActivity.getPersonalString("account"),editText.getText().toString(),"好" )).start();
                         }

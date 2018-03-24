@@ -34,7 +34,7 @@ public class WelcomeActivity extends AppCompatActivity {
             @Override
             public void run(){
                 try{
-                    sleep(2000);
+                    sleep(3000);
                     if(!ok){
                         Intent intent=new Intent(WelcomeActivity.this,LoginActivity.class);
                         startActivity(intent);

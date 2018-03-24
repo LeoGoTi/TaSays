@@ -1,14 +1,21 @@
 package bupt.tasays.tasays;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.json.JSONObject;
+
+import bupt.tasays.settings.Settings;
 
 /**
  * Created by root on 17-12-5.
@@ -19,6 +26,7 @@ public class PersonalInfo extends Fragment
 
     private TextView contact,clean,about;
     private TextView nickname,signature,userId,birth,constellation,gender;
+    CardView logout;
     private View view;
     private MainActivity mainActivity;
     private int birthY,birthM,birthD;
@@ -28,6 +36,7 @@ public class PersonalInfo extends Fragment
         contact =view.findViewById(R.id.contact);
         clean=view.findViewById(R.id.clean);
         about=view.findViewById(R.id.about);
+        logout=view.findViewById(R.id.logout);
         contact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -47,6 +56,42 @@ public class PersonalInfo extends Fragment
             }
         });
         mainActivity=(MainActivity)getActivity();
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder dialog = new AlertDialog.Builder(mainActivity);
+                dialog.setTitle("登出");
+                dialog.setMessage("确定要退出登录吗？");
+                dialog.setCancelable(true);
+                dialog.setPositiveButton("退出登陆", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        try {
+                            JSONObject jsonObject=new JSONObject();
+                            String account=mainActivity.getPersonalString("account");
+                            jsonObject.put("account", account);
+                            jsonObject.put("password","");
+                            jsonObject.put("remember", "false");
+                            jsonObject.put("auto","false");
+                            Settings.writeSetting(mainActivity,jsonObject.toString());
+                            Intent intent=new Intent(mainActivity,LoginActivity.class);
+                            startActivity(intent);
+                            mainActivity.finish();
+                        }
+                        catch (Exception e){
+                            e.printStackTrace();
+                        }
+                    }
+                });
+                dialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+                dialog.show();
+            }
+        });
         return view;
     }
 

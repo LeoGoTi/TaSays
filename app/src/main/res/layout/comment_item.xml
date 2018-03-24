@@ -45,6 +45,7 @@
                 android:layout_alignParentRight="true"
                 android:src="@drawable/share"
                 android:layout_margin="10dp"/>
+            <!-->
             <ImageView
                 android:id="@+id/comment_item_love"
                 android:layout_width="20dp"
@@ -52,6 +53,14 @@
                 android:layout_toLeftOf="@+id/comment_item_share"
                 android:layout_toStartOf="@+id/comment_item_share"
                 android:src="@drawable/love"
+                android:layout_margin="10dp"/>
+            <!-->
+            <com.ldoublem.thumbUplib.ThumbUpView
+                android:id="@+id/comment_item_love"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_toLeftOf="@+id/comment_item_share"
+                android:layout_toStartOf="@+id/comment_item_share"
                 android:layout_margin="10dp"/>
 
 
@@ -65,9 +74,10 @@
             android:layout_below="@id/comment_item_rl"
             android:layout_margin="5dp"
             android:textSize="18sp"
-            android:text="一小时以前"
+            android:text="来自云村"
             android:textColor="@color/grey400"/>
         <TextView
+            android:lineSpacingMultiplier="1.5"
             android:id="@+id/comment_item_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

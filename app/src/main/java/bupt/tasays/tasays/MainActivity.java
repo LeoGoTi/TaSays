@@ -1,9 +1,7 @@
 package bupt.tasays.tasays;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -15,8 +13,6 @@ import android.support.v4.app.FragmentTransaction;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.io.InputStream;
 
 import bupt.tasays.web_sql.WebService;
 
@@ -68,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 try {
                     jsonObject = new JSONObject(json);
                 } catch (JSONException e) {
+                    e.printStackTrace();
                 }
                 resolvePersonalInfo(jsonObject);
             }
@@ -133,7 +130,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             birthM = (temp - 10000 * birthY) / 100;
             birthD = temp % 100;
         } catch (JSONException e) {
-
+            e.printStackTrace();
         }
     }
 

@@ -39,7 +39,7 @@ public class PersonalFragment extends Fragment {
     private PersonalEdit personaledit = new PersonalEdit();
     private boolean editFlag = false;
     private FloatingActionButton floatingActionButton;
-    private TextView signature, userId;//此处仅需要更新这两个信息
+    private TextView signature, phone;//此处仅需要更新这两个信息
     private MainActivity mainActivity = (MainActivity) getActivity();
     private int birthY = 1990, birthM = 1, birthD = 1;
     private View fragmentView, view;
@@ -94,12 +94,12 @@ public class PersonalFragment extends Fragment {
     private void refresh2() {
         try {
             signature = view.findViewById(R.id.signature);
-            userId = view.findViewById(R.id.user_id);
+            phone = view.findViewById(R.id.user_id);
             mainActivity = (MainActivity) getActivity();
             signature.setText(mainActivity.getPersonalString("introduction"));
-            userId.setText(mainActivity.getPersonalString("phonenum"));
+            phone.setText(mainActivity.getPersonalString("phonenum"));
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
     }
 
