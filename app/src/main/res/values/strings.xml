@@ -4,4 +4,8 @@
     <string name="title_activity_welcome">TaSays</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="ad_first_love">从天南到海北，再从海北到天南，当所有繁华红尘都斑驳落尽的时候，我会回来。生命中最不能割舍的，就是最初萌生的感情，无论经历多少繁华，总记得那个陌上少年清秀的眉眼。</string>
+    <string name="ad_travel">那时，青年人不断思考，却什么答案也得不到，于是他们去流浪；这天，青年人不去思考，无数答案和观点就已将我们包围，于是我们去旅游</string>
+    <string name="ad_graduation">一开始青涩懵懂的我们，总以为毕业还很遥远，总以为时间还长，可是，真的毕业了，转眼身边的人都已各奔东西，才发现，原来一转身，便已是一段青春。毕业季，承载着太多的不舍，太多的留恋。毕业季----不说再见，愿我们在彼此看不见的时光里，都能成为更好的自己。</string>
+    <string name="ad_soap">想当年十六七岁的时光，那时不光有忙碌充实的学习生活，还有那些陪伴了我们青春时代的偶像剧，还记得那年青涩的少男少女们迷恋的电视剧吗？快来看一看吧，或许能唤起属于你我的青葱回忆！</string>
 </resources>

@@ -3,7 +3,6 @@ package bupt.tasays.tasays;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
@@ -52,7 +51,7 @@ public class PersonalInfo extends Fragment
         about.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(),"项目组长：\n张欣悦\n组员：\n郭聚川\n马祁\n刘泳君\n刘国维",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(),"项目组长：\n    张欣悦\n组员：\n    郭聚川\n    马祁\n    刘泳君\n    刘国维",Toast.LENGTH_SHORT).show();
             }
         });
         mainActivity=(MainActivity)getActivity();

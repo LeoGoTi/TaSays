@@ -14,8 +14,8 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20sp"
-            android:src="@drawable/ta"/>
+            android:layout_margin="50sp"
+            android:src="@drawable/tasay"/>
     </LinearLayout>
     <LinearLayout
         android:orientation="vertical"
@@ -34,8 +34,8 @@
             android:hint="请输入手机号"
             android:maxLength="16"
             android:singleLine="true"
-            android:drawableStart="@drawable/account"
-            android:drawableLeft="@drawable/account"
+            android:drawableStart="@drawable/contact"
+            android:drawableLeft="@drawable/contact"
             android:theme="@style/MyEditText"/>
         <EditText
             android:id="@+id/reg_account"

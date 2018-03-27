@@ -3,7 +3,7 @@
     android:id="@+id/main_home_frame"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/cyan300"
+    android:background="#A6C6EF"
     android:fitsSystemWindows="false">
 
 
@@ -25,7 +25,12 @@
                 <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
                     app:cardCornerRadius="10dp">
 
                     <LinearLayout
@@ -61,33 +66,9 @@
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
 
-                <!-->
-                以下ImageView用滚动图片控件实现
-                <!-->
-                <!-->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:background="@color/grey300">
-                    <android.support.v7.widget.CardView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="10dp"
-                        app:cardElevation="5dp"
-                        app:cardCornerRadius="10dp">
-                        <ImageView
-                            android:id="@+id/main_photo"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="@drawable/photo"/>
-
-                    </android.support.v7.widget.CardView>
-
-                </LinearLayout>
-                <!-->
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="200dp">
+                    android:layout_height="170dp">
 
                     <android.support.v4.view.ViewPager
                         android:id="@+id/view_pager"
@@ -105,11 +86,43 @@
                     </me.relex.circleindicator.CircleIndicator>
                 </RelativeLayout>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="2px"
+                        android:layout_marginBottom="15dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="15dp"
+                        android:background="@color/grey800" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0"
+                        android:text="为你推荐"
+                        android:textSize="15sp"
+                        android:gravity="center"
+                        android:layout_gravity="center"/>
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="2px"
+                        android:layout_marginBottom="15dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="15dp"
+                        android:background="@color/grey800" />
+
+                </LinearLayout>
+
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/main_recycler"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp">
+                    android:layout_height="wrap_content">
 
                 </android.support.v7.widget.RecyclerView>
 

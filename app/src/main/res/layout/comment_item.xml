@@ -4,8 +4,9 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="10dp"
-    android:layout_margin="5dp"
-    app:cardBackgroundColor="@color/grey50">
+    android:layout_margin="1dp"
+    app:cardBackgroundColor="@color/grey50"
+    app:cardElevation="5dp">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -33,14 +34,14 @@
                 android:id="@+id/comment_item_gender"
                 android:layout_width="17dp"
                 android:layout_height="17dp"
-                android:src="@drawable/gender0"
+                android:src="@drawable/gender1"
                 android:layout_margin="3dp"
                 android:layout_toRightOf="@id/comment_item_nickname"
                 android:layout_centerVertical="true"/>
             <ImageView
                 android:id="@+id/comment_item_share"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:src="@drawable/share"
@@ -57,10 +58,18 @@
             <!-->
             <com.ldoublem.thumbUplib.ThumbUpView
                 android:id="@+id/comment_item_love"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_toLeftOf="@+id/comment_item_share"
                 android:layout_toStartOf="@+id/comment_item_share"
+                android:layout_margin="10dp"/>
+            <ImageView
+                android:id="@+id/comment_item_listen"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_toLeftOf="@id/comment_item_love"
+                android:layout_toStartOf="@id/comment_item_love"
+                android:src="@drawable/listen"
                 android:layout_margin="10dp"/>
 
 
@@ -72,7 +81,8 @@
             android:layout_toRightOf="@id/comment_item_port"
             android:layout_toEndOf="@id/comment_item_port"
             android:layout_below="@id/comment_item_rl"
-            android:layout_margin="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
             android:textSize="18sp"
             android:text="来自云村"
             android:textColor="@color/grey400"/>

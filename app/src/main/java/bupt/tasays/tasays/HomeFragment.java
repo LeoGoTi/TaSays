@@ -1,5 +1,6 @@
 package bupt.tasays.tasays;
 
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
@@ -7,15 +8,14 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.Toast;
 
-import bupt.tasays.DB_Direct.DBManager;
 import bupt.tasays.list_adapter.AdapterViewpager;
 import bupt.tasays.list_adapter.Comment;
 import bupt.tasays.list_adapter.CommentAdapter;
@@ -26,8 +26,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
-import static android.content.ContentValues.TAG;
 
 /**
  * Created by root on 17-12-11.
@@ -42,11 +40,23 @@ public class HomeFragment extends Fragment{
     private static Handler handler;
     static CommentAdapter adapter;
     static AdapterViewpager adapterViewpager;
+    private FrameLayout search;
+    MainActivity mainActivity;
+    private static String type=null;
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.home_layout, container, false);
+        type=null;
+        mainActivity=(MainActivity)getActivity();
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.main_recycler);
         FrameLayout frameLayout=view.findViewById(R.id.main_home_frame);
         final EditText editText=view.findViewById(R.id.search_home);
+        search=view.findViewById(R.id.search_home_button);
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getActivity(),"搜索一哈",Toast.LENGTH_SHORT).show();
+            }
+        });
         frameLayout.setFocusable(true);
         frameLayout.setFocusableInTouchMode(true);
         ViewPager viewPager=view.findViewById(R.id.view_pager);
@@ -62,8 +72,19 @@ public class HomeFragment extends Fragment{
 
         recyclerView.setAdapter(adapter);
         handler=new MyHandler();
+        adapterViewpager.setHandler(handler);
         getCommentsThread=new GetCommentsThread(handler);
         getCommentsThread.start();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while(type==null);
+                Intent intent=new Intent(mainActivity,SpecialActivity.class);
+                intent.putExtra("type",type);
+                type=null;
+                startActivity(intent);
+            }
+        }).start();
         return view;
     }
 
@@ -95,6 +116,9 @@ public class HomeFragment extends Fragment{
                     break;
                 case 0:
                     break;
+                case 4:
+                    type=(String)msg.obj;
+                    break;
             }
         }
     }
@@ -118,4 +142,8 @@ public class HomeFragment extends Fragment{
         imageView4.setImageResource(R.drawable.add);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
 }

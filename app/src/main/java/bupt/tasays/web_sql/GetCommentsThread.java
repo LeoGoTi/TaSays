@@ -15,13 +15,21 @@ public class GetCommentsThread extends Thread{
     private int FAILURE=0;
     private DBManager dbManager;
     String sql;
+    String type=null;//用于专题的获取
 
     public GetCommentsThread(Handler handler){
         this.handler=handler;
     }
+    public GetCommentsThread(Handler handler,String type){
+        this.handler=handler;
+        this.type=type;
+    }
     @Override
     public void run(){
-        sql = "SELECT content,songname,singername from comments,songinfos where comments.songid=songinfos.songid order by rand();";
+        if(type==null)
+            sql = "SELECT content,songname,singername from comments,songinfos where comments.songid=songinfos.songid order by rand();";
+        else
+            sql = "SELECT content,songname,singername from special,songinfo where special.songid=songinfo.songid and subject='"+type+"';";
         dbManager = DBManager.createInstance();
         dbManager.connectDB();
         ResultSet resultSet = dbManager.executeQuery(sql);

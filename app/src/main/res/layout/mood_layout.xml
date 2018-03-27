@@ -55,6 +55,7 @@
             android:id="@+id/mood_recycler"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:minHeight="30dp"
             android:layout_marginTop="65dp">
 
         </android.support.v7.widget.RecyclerView>
@@ -66,6 +67,7 @@
             android:backgroundTint="@color/grey50"
             android:src="@drawable/pencil1"
             app:layout_anchor="@id/mood_recycler"
-            app:layout_anchorGravity="right|bottom"/>
+            app:layout_anchorGravity="right|top"
+            android:layout_marginTop="80dp"/>
     </android.support.design.widget.CoordinatorLayout>
 </FrameLayout>

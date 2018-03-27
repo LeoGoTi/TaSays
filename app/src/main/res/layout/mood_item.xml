@@ -45,7 +45,6 @@
         android:layout_toRightOf="@id/mood_item_mood"
         android:background="@drawable/bubble2"
         android:gravity="center"
-        android:text="被私信了！感觉受到了莫大的宠幸\n"
         android:textColor="@color/cyan50"
         android:textSize="18sp"
         android:layout_margin="5dp">
