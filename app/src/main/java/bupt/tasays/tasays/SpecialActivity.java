@@ -25,6 +25,7 @@ public class SpecialActivity extends AppCompatActivity {
     private ImageView specialImage;
     private RecyclerView recyclerView;
     private TextView textView;
+    private TextView textType;
     private static CommentAdapter adapter;
     private Handler handler;
     private GetCommentsThread getCommentsThread;
@@ -38,6 +39,7 @@ public class SpecialActivity extends AppCompatActivity {
         specialImage=findViewById(R.id.special_image);
         recyclerView=findViewById(R.id.special_recycler);
         textView=findViewById(R.id.special_text);
+        textType=findViewById(R.id.special_type);
         //加载图片
         switch (type){
             case "初恋":
@@ -59,6 +61,7 @@ public class SpecialActivity extends AppCompatActivity {
             default:
                 break;
         }
+        textType.setText(type);
         //加载文字
 
 
@@ -76,14 +79,15 @@ public class SpecialActivity extends AppCompatActivity {
         public void handleMessage(Message msg){
             switch(msg.what){
                 case 1:
-                        String tempContent, tempCommentInfo;
+                        String tempContent, tempCommentInfo,tempUrl;
                         ResultSet resultSet=(ResultSet)msg.obj;
                         try {
                             resultSet.absolute(1);
                             do {
                                 tempContent = resultSet.getString("content");
+                                tempUrl = resultSet.getString("url");
                                 tempCommentInfo = "在 " + resultSet.getString("singername") + "-" + resultSet.getString("songname") + " 后的热评";
-                                commentList.add(new Comment(tempContent, "T@", tempCommentInfo));
+                                commentList.add(new Comment(tempContent, "T@", tempCommentInfo,tempUrl));
                             }while(resultSet.next());
                             adapter.notifyDataSetChanged();
                         } catch (SQLException e) {

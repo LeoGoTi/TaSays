@@ -1,5 +1,6 @@
 package bupt.tasays.list_adapter;
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import java.util.List;
 
 import bupt.tasays.tasays.MainActivity;
 import bupt.tasays.tasays.R;
+import bupt.tasays.tasays.WebActivity;
 
 /**
  * Created by root on 17-12-12.
@@ -55,12 +57,6 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         View view= LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.comment_item,parent,false);
         final ViewHolder holder= new ViewHolder(view);
-        holder.listen.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(view.getContext(),"听一下",Toast.LENGTH_SHORT).show();
-            }
-        });
         holder.love.setOnThumbUp(new ThumbUpView.OnThumbUp() {
             @Override
             public void like(boolean like) {
@@ -82,10 +78,19 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position)
     {
-        Comment comment=mCommentList.get(position);
+        final Comment comment=mCommentList.get(position);
         holder.commentContent.setText(comment.getComment());
         holder.commentUser.setText(comment.getUser_id());
         holder.commentSong.setText(comment.getSong());
+        holder.listen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Toast.makeText(view.getContext(),"听一下",Toast.LENGTH_SHORT).show();
+                Intent intent=new Intent(holder.listen.getContext(), WebActivity.class);
+                intent.putExtra("destUrl",comment.getUrl());
+                holder.listen.getContext().startActivity(intent);
+            }
+        });
     }
 
     @Override

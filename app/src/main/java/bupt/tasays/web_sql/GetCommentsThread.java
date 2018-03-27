@@ -27,9 +27,9 @@ public class GetCommentsThread extends Thread{
     @Override
     public void run(){
         if(type==null)
-            sql = "SELECT content,songname,singername from comments,songinfos where comments.songid=songinfos.songid order by rand();";
+            sql = "SELECT content,songname,singername,url from comments,songinfos where comments.songid=songinfos.songid order by rand();";
         else
-            sql = "SELECT content,songname,singername from special,songinfo where special.songid=songinfo.songid and subject='"+type+"';";
+            sql = "SELECT content,songname,singername,url from special,songinfo where special.songid=songinfo.songid and subject='"+type+"';";
         dbManager = DBManager.createInstance();
         dbManager.connectDB();
         ResultSet resultSet = dbManager.executeQuery(sql);

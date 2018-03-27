@@ -94,19 +94,21 @@ public class HomeFragment extends Fragment{
             switch(msg.what){
                 case 1:
                     if(!added){
-                        String tempContent, tempCommentInfo;
+                        String tempContent, tempCommentInfo,tempUrl;
                         ResultSet resultSet=(ResultSet)msg.obj;
                         try {
                             for (int i = 1; i < 10; i++) {
                                 resultSet.absolute(i);
                                 tempContent = resultSet.getString("content");
+                                tempUrl = resultSet.getString("url");
                                 tempCommentInfo = "在 "+resultSet.getString("singername")+"-"+resultSet.getString("songname")+" 后的热评";
-                                commentList.add(new Comment(tempContent, "T@", tempCommentInfo));
+                                commentList.add(new Comment(tempContent, "T@", tempCommentInfo,tempUrl));
                             }
                             resultSet.absolute(11);
                             tempContent = resultSet.getString("content");
+                            tempUrl = resultSet.getString("url");
                             tempCommentInfo = "在 "+resultSet.getString("singername")+"-"+resultSet.getString("songname")+" 后的热评";
-                            commentList.add(new Comment(tempContent, "T@", tempCommentInfo+""));
+                            commentList.add(new Comment(tempContent, "T@", tempCommentInfo , tempUrl));
                             adapter.notifyDataSetChanged();
                         } catch (SQLException e) {
                             e.printStackTrace();
