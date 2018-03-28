@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private String nickname="设置用户名", introduction="无", phonenum="未设置";
     private String gender="1";
     private String constellation = "摩羯座";
+    private int userid;
     private int birthY=1990, birthM=1, birthD=1;
 
     @Override
@@ -127,6 +128,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             introduction = json.getString("introduction");
             phonenum = json.getString("phonenum");
             gender = json.getString("gender");
+            userid = json.getInt("ID");
             birthY = temp / 10000;
             birthM = (temp - 10000 * birthY) / 100;
             birthD = temp % 100;
@@ -162,6 +164,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 return birthM;
             case "birthD":
                 return birthD;
+            case "userid":
+                return userid;
             default:
                 throw new Exception();
         }

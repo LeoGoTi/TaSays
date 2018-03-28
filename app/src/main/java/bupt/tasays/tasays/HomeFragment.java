@@ -75,7 +75,12 @@ public class HomeFragment extends Fragment{
         recyclerView.setAdapter(adapter);
         handler=new MyHandler();
         adapterViewpager.setHandler(handler);
-        getCommentsThread=new GetCommentsThread(handler);
+        try {
+            getCommentsThread = new GetCommentsThread(handler, mainActivity.getPersonalInt("userid"));
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
         getCommentsThread.start();
 
         return view;
@@ -88,20 +93,19 @@ public class HomeFragment extends Fragment{
                 case 1:
                     if(!added){
                         String tempContent, tempCommentInfo,tempUrl;
+                        int tempContentid;
+                        boolean tempIsLiked;
                         ResultSet resultSet=(ResultSet)msg.obj;
                         try {
-                            for (int i = 1; i < 10; i++) {
+                            for (int i = 1; i < 20; i++) {
                                 resultSet.absolute(i);
                                 tempContent = resultSet.getString("content");
                                 tempUrl = resultSet.getString("url");
+                                tempContentid=resultSet.getInt("contentid");
+                                tempIsLiked=resultSet.getBoolean("isliked");
                                 tempCommentInfo = "在 "+resultSet.getString("singername")+"-"+resultSet.getString("songname")+" 后的热评";
-                                commentList.add(new Comment(tempContent, "T@", tempCommentInfo,tempUrl));
+                                commentList.add(new Comment(tempContent, "T@", tempCommentInfo,tempUrl,tempContentid,tempIsLiked));
                             }
-                            resultSet.absolute(11);
-                            tempContent = resultSet.getString("content");
-                            tempUrl = resultSet.getString("url");
-                            tempCommentInfo = "在 "+resultSet.getString("singername")+"-"+resultSet.getString("songname")+" 后的热评";
-                            commentList.add(new Comment(tempContent, "T@", tempCommentInfo , tempUrl));
                             adapter.notifyDataSetChanged();
                         } catch (SQLException e) {
                             e.printStackTrace();
@@ -147,6 +151,12 @@ public class HomeFragment extends Fragment{
                 while(mainActivity==null);
                 Intent intent=new Intent(mainActivity,SpecialActivity.class);
                 intent.putExtra("type",type);
+                try {
+                    intent.putExtra("userid", mainActivity.getPersonalInt("userid"));
+                }
+                catch (Exception e){
+                    e.printStackTrace();
+                }
                 type=null;
                 startActivity(intent);
             }

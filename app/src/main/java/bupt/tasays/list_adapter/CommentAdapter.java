@@ -17,6 +17,7 @@ import java.util.List;
 import bupt.tasays.tasays.MainActivity;
 import bupt.tasays.tasays.R;
 import bupt.tasays.tasays.WebActivity;
+import bupt.tasays.web_sql.CollectionThread;
 
 /**
  * Created by root on 17-12-12.
@@ -24,6 +25,7 @@ import bupt.tasays.tasays.WebActivity;
 
 public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHolder> {
     private List<Comment> mCommentList;
+    private MainActivity mainActivity;
 
     static class ViewHolder extends RecyclerView.ViewHolder
     {
@@ -64,26 +66,35 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
     public void onBindViewHolder(final ViewHolder holder, int position)
     {
         final Comment comment=mCommentList.get(position);
+        if(mainActivity==null)
+            mainActivity=(MainActivity) holder.love.getContext();
         holder.commentContent.setText(comment.getComment());
         holder.commentUser.setText(comment.getUser_id());
         holder.commentSong.setText(comment.getSong());
         holder.listen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Toast.makeText(view.getContext(),"听一下",Toast.LENGTH_SHORT).show();
                 Intent intent=new Intent(holder.listen.getContext(), WebActivity.class);
                 intent.putExtra("destUrl",comment.getUrl());
                 holder.listen.getContext().startActivity(intent);
             }
         });
+        //读取并设置已收藏的状态
+        if(comment.getIsLiked()){
+            holder.love.setLike();
+        }
         holder.love.setOnThumbUp(new ThumbUpView.OnThumbUp() {
             @Override
             public void like(boolean like) {
-                if (like){
-                    Toast.makeText(holder.love.getContext(),"喜欢了",Toast.LENGTH_SHORT).show();
-                }
-                else
-                    Toast.makeText(holder.love.getContext(),"不喜欢了",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(holder.love.getContext(),like?"收藏成功":"取消收藏",Toast.LENGTH_SHORT).show();
+                    try{
+                        int userid=mainActivity.getPersonalInt("userid");
+                        new Thread(new CollectionThread(comment.getContentid(),userid,like)).start();
+                    }
+                    catch(Exception e){
+                        e.printStackTrace();
+                    }
+
             }
         });
         holder.share.setOnClickListener(new View.OnClickListener() {

@@ -64,7 +64,7 @@
                 android:layout_toLeftOf="@+id/comment_item_share"
                 android:layout_toStartOf="@+id/comment_item_share"
                 android:layout_margin="10dp"
-                android:layout_centerVertical="true"/>
+                android:layout_centerVertical="true" />
             <ImageView
                 android:id="@+id/comment_item_listen"
                 android:layout_width="30dp"

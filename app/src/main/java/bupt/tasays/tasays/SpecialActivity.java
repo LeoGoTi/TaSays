@@ -29,6 +29,7 @@ public class SpecialActivity extends AppCompatActivity {
     private static CommentAdapter adapter;
     private Handler handler;
     private GetCommentsThread getCommentsThread;
+    private int userid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +37,7 @@ public class SpecialActivity extends AppCompatActivity {
         setContentView(R.layout.special_layout);
         Intent intent=getIntent();
         type=intent.getStringExtra("type");//获取种类
+        userid=intent.getIntExtra("userid",1000);
         specialImage=findViewById(R.id.special_image);
         recyclerView=findViewById(R.id.special_recycler);
         textView=findViewById(R.id.special_text);
@@ -70,7 +72,7 @@ public class SpecialActivity extends AppCompatActivity {
         adapter=new CommentAdapter(commentList);
         recyclerView.setAdapter(adapter);
         handler=new MyHandler();
-        getCommentsThread=new GetCommentsThread(handler,type);
+        getCommentsThread=new GetCommentsThread(handler,type,userid);
         getCommentsThread.start();
     }
 
@@ -80,14 +82,18 @@ public class SpecialActivity extends AppCompatActivity {
             switch(msg.what){
                 case 1:
                         String tempContent, tempCommentInfo,tempUrl;
+                        int tempContentid;
+                        boolean tempIsLiked;
                         ResultSet resultSet=(ResultSet)msg.obj;
                         try {
                             resultSet.absolute(1);
                             do {
                                 tempContent = resultSet.getString("content");
                                 tempUrl = resultSet.getString("url");
+                                tempContentid = resultSet.getInt("contentid");
+                                tempIsLiked = resultSet.getBoolean("isliked");
                                 tempCommentInfo = "在 " + resultSet.getString("singername") + "-" + resultSet.getString("songname") + " 后的热评";
-                                commentList.add(new Comment(tempContent, "T@", tempCommentInfo,tempUrl));
+                                commentList.add(new Comment(tempContent, "T@", tempCommentInfo,tempUrl,tempContentid,tempIsLiked));
                             }while(resultSet.next());
                             adapter.notifyDataSetChanged();
                         } catch (SQLException e) {

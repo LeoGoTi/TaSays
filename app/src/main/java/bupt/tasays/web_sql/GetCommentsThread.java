@@ -16,20 +16,25 @@ public class GetCommentsThread extends Thread{
     private DBManager dbManager;
     String sql;
     String type=null;//用于专题的获取
+    int userid;
 
-    public GetCommentsThread(Handler handler){
+    public GetCommentsThread(Handler handler,int userid){
         this.handler=handler;
+        this.userid=userid;
     }
-    public GetCommentsThread(Handler handler,String type){
+    public GetCommentsThread(Handler handler,String type,int userid){
         this.handler=handler;
         this.type=type;
+        this.userid=userid;
     }
     @Override
     public void run(){
         if(type==null)
-            sql = "SELECT content,songname,singername,url from comments,songinfos where comments.songid=songinfos.songid order by rand();";
+            sql = "SELECT content,songname,singername,url,contentid,exists(select * from collection where userid="+userid+" and collection.contentid=comments.contentid) as isliked\n" +
+                    "from comments,songinfo where comments.songid=songinfo.songid order by rand() LIMIT 20;";
         else
-            sql = "SELECT content,songname,singername,url from special,songinfo where special.songid=songinfo.songid and subject='"+type+"';";
+            sql = "SELECT content,songname,singername,url,contentid,exists(select * from collection where userid="+userid+" and collection.contentid=comments.contentid) as isliked\n" +
+                    "from special,songinfo where comments.songid=songinfo.songid and subject='"+type+"' LIMIT 20;";
         dbManager = DBManager.createInstance();
         dbManager.connectDB();
         ResultSet resultSet = dbManager.executeQuery(sql);
