@@ -50,5 +50,14 @@
         android:layout_margin="5dp">
 
     </TextView>
+    <ImageView
+        android:id="@+id/mood_item_trash"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/mood_item_mood"
+        android:layout_toRightOf="@id/mood_item_mood"
+        android:layout_below="@+id/mood_item_content"
+        android:layout_margin="10dp"
+        android:src="@drawable/trash"/>
 
 </RelativeLayout>

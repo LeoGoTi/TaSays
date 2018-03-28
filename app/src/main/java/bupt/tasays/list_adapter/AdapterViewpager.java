@@ -15,7 +15,6 @@ public class AdapterViewpager extends PagerAdapter {
     private List<View> mViewList;
     private Handler handler;
     private int SUCCESS_TYPE=4;
-    private float xDistance, yDistance, xLast, yLast;
 
     public AdapterViewpager(List<View> mViewList) {
         this.mViewList = mViewList;
@@ -68,5 +67,6 @@ public class AdapterViewpager extends PagerAdapter {
     public void setHandler(Handler handler) {
         this.handler=handler;
     }
+
 
 }

@@ -24,7 +24,7 @@ public class GetPrivateCommentsThread extends Thread{
     }
     @Override
     public void run(){
-        sql = "SELECT content,time,class2 from comments,users\n" +
+        sql = "SELECT content,time,class2,contentid from comments,users\n" +
                 "where userid=ID and account='"+account+"' ORDER BY time DESC ;";
         dbManager = DBManager.createInstance();
         dbManager.connectDB();

@@ -27,6 +27,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.Thread.sleep;
+
 /**
  * Created by root on 17-12-11.
  */
@@ -59,7 +61,7 @@ public class HomeFragment extends Fragment{
         });
         frameLayout.setFocusable(true);
         frameLayout.setFocusableInTouchMode(true);
-        ViewPager viewPager=view.findViewById(R.id.view_pager);
+        final ViewPager viewPager=view.findViewById(R.id.view_pager);
         CircleIndicator circleIndicator=view.findViewById(R.id.indicator);
         adapterViewpager=new AdapterViewpager(viewList);
         if(!added)addAd();
@@ -75,16 +77,7 @@ public class HomeFragment extends Fragment{
         adapterViewpager.setHandler(handler);
         getCommentsThread=new GetCommentsThread(handler);
         getCommentsThread.start();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while(type==null);
-                Intent intent=new Intent(mainActivity,SpecialActivity.class);
-                intent.putExtra("type",type);
-                type=null;
-                startActivity(intent);
-            }
-        }).start();
+
         return view;
     }
 
@@ -147,5 +140,16 @@ public class HomeFragment extends Fragment{
     @Override
     public void onResume() {
         super.onResume();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while(type==null);
+                while(mainActivity==null);
+                Intent intent=new Intent(mainActivity,SpecialActivity.class);
+                intent.putExtra("type",type);
+                type=null;
+                startActivity(intent);
+            }
+        }).start();
     }
 }

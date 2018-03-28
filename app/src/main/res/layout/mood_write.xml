@@ -1,8 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<EditText
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="200dp"
-    android:layout_height="wrap_content"
-    android:id="@+id/mood_write_edit">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="220dp"
+    android:layout_height="wrap_content">
 
-</EditText>
+    <EditText
+
+        android:id="@+id/mood_write_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/moodEdit"
+        android:layout_margin="10dp"
+        android:hint="有些心事，不吐不快">
+
+    </EditText>
+    <RadioGroup
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <RadioButton
+            android:id="@+id/mood_write_happy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="Happy"
+            android:drawableLeft="@drawable/smiley_happy_small"
+            android:drawableStart="@drawable/smiley_happy_small"
+            android:drawablePadding="5dp" />
+        <RadioButton
+            android:id="@+id/mood_write_normal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="Normal"
+            android:drawableLeft="@drawable/smiley_normal_small"
+            android:drawableStart="@drawable/smiley_normal_small"
+            android:drawablePadding="5dp"/>
+        <RadioButton
+            android:id="@+id/mood_write_sad"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="Sad"
+            android:drawableLeft="@drawable/smiley_sad_small"
+            android:drawableStart="@drawable/smiley_sad_small"
+
+            android:drawablePadding="5dp"/>
+    </RadioGroup>
+</LinearLayout>

@@ -1,7 +1,6 @@
 package bupt.tasays.web_sql;
 
 import android.os.Handler;
-
 import java.sql.ResultSet;
 import java.util.Calendar;
 
@@ -14,12 +13,13 @@ public class PostCommentThread extends Thread{
     private DBManager dbManager;
     String sql;
     String account,content,mood;
+    Handler handler;
 
-    public PostCommentThread(String account, String content, String mood){
+    public PostCommentThread(String account, String content, String mood,Handler handler){
         this.content=content;
         this.account=account;
         this.mood=mood;
-
+        this.handler=handler;
     }
     @Override
     public void run(){
@@ -35,8 +35,9 @@ public class PostCommentThread extends Thread{
                     "('"+content+"',"+
                     Integer.toString(id)+",'"+
                     time+"','"+
-                    "Happy"+"')";//mood暂时用英文Happy代替
+                    mood+"')";//mood暂时用英文Happy代替
             dbManager.executeUpdate(sql);
+            handler.obtainMessage(4).sendToTarget();
         }
         catch(Exception e){
             e.printStackTrace();

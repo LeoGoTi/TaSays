@@ -57,21 +57,6 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         View view= LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.comment_item,parent,false);
         final ViewHolder holder= new ViewHolder(view);
-        holder.love.setOnThumbUp(new ThumbUpView.OnThumbUp() {
-            @Override
-            public void like(boolean like) {
-                if (like)
-                    Toast.makeText(holder.love.getContext(),"喜欢了",Toast.LENGTH_SHORT).show();
-                else
-                    Toast.makeText(holder.love.getContext(),"不喜欢了",Toast.LENGTH_SHORT).show();
-            }
-        });
-        holder.share.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(view.getContext(),"分享一下",Toast.LENGTH_SHORT).show();
-            }
-        });
         return holder;
     }
 
@@ -89,6 +74,22 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
                 Intent intent=new Intent(holder.listen.getContext(), WebActivity.class);
                 intent.putExtra("destUrl",comment.getUrl());
                 holder.listen.getContext().startActivity(intent);
+            }
+        });
+        holder.love.setOnThumbUp(new ThumbUpView.OnThumbUp() {
+            @Override
+            public void like(boolean like) {
+                if (like){
+                    Toast.makeText(holder.love.getContext(),"喜欢了",Toast.LENGTH_SHORT).show();
+                }
+                else
+                    Toast.makeText(holder.love.getContext(),"不喜欢了",Toast.LENGTH_SHORT).show();
+            }
+        });
+        holder.share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(view.getContext(),"分享一下",Toast.LENGTH_SHORT).show();
             }
         });
     }

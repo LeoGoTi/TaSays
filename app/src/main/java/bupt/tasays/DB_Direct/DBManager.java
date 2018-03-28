@@ -14,7 +14,7 @@ public class DBManager {
     public static final String DRIVER = "com.mysql.jdbc.Driver";
     public static final String USER = "root";
     public static final String PASS = "bupt8421BCD!";
-    public static final String URL = "jdbc:mysql://39.107.121.30:3306/Server";
+    public static final String URL = "jdbc:mysql://39.107.121.30:3306/Server?useSSL=false";
     //把MySQL-USER和MySQL-PASS改为你的服务器mysql账户和密码
 
     // 静态成员，支持单态模式

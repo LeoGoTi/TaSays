@@ -13,6 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.Toast;
 
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -30,14 +32,16 @@ import bupt.tasays.web_sql.PostCommentThread;
  */
 
 public class MoodFragment extends Fragment {
-    private static List<MoodLine> moodLineList=new ArrayList<>(50);
-    private static List<MoodLine> moodLineListTemp=new ArrayList<>(50);
+    private static List<MoodLine> moodLineList=new ArrayList<>();
+    private static List<MoodLine> moodLineListTemp=new ArrayList<>();
     static MoodLineAdapter adapter;
     FloatingActionButton floatingActionButton;
     RecyclerView recyclerView;
     MainActivity mainActivity;
     private static Handler handler;
-    private GetPrivateCommentsThread getPrivateCommentsThread;
+    private static GetPrivateCommentsThread getPrivateCommentsThread;
+    private RadioButton happy,normal,sad;
+    private static boolean needRefresh =false;
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         View view = inflater.inflate(R.layout.mood_layout, container, false);
@@ -52,27 +56,20 @@ public class MoodFragment extends Fragment {
         mainActivity=(MainActivity)getActivity();
         LinearLayoutManager layoutManager=new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
-        adapter=new MoodLineAdapter(moodLineList);
-        recyclerView.setAdapter(adapter);
         handler=new MyHandler();
-        try {
-            //开始从服务器载入之前清除已存在的
-            moodLineList.clear();
-            getPrivateCommentsThread = new GetPrivateCommentsThread(handler, mainActivity.getPersonalString("account"));
-            getPrivateCommentsThread.start();
-        }
-        catch(Exception e){
-            e.printStackTrace();
-        }
-
-        /*
-        加载静态数据用的
-        do{
-            moodLineList.add(new MoodLine(R.drawable.happy,"12月7日","单曲循环一整天\n"));
-            added++;
-        }while(added<10);
-        */
-
+        adapter=new MoodLineAdapter(moodLineList,handler);
+        recyclerView.setAdapter(adapter);
+        refreshMoodLine();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while(true){
+                    while(!needRefresh);
+                    refreshMoodLine();
+                    needRefresh =false;
+                }
+            }
+        }).start();
         return view;
     }
 
@@ -94,24 +91,35 @@ public class MoodFragment extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         EditText editText=layout.findViewById(R.id.mood_write_edit);
+
                         Calendar calendar = Calendar.getInstance();
                         int month = calendar.get(Calendar.MONTH)+1;
                         int day = calendar.get(Calendar.DAY_OF_MONTH);
-                        moodLineListTemp.clear();
-                        moodLineListTemp.addAll(moodLineList);
-                        moodLineList.clear();
-                        moodLineList.add(new MoodLine(R.drawable.happy,month+"月"+day+"日",editText.getText().toString()+"\n"));
-                        moodLineList.addAll(moodLineListTemp);
-                        //adapter=new MoodLineAdapter(moodLineList);
-                        //recyclerView.setAdapter(adapter);
-                        adapter.notifyDataSetChanged();
-                        try {
-                            new Thread(new PostCommentThread(mainActivity.getPersonalString("account"),editText.getText().toString(),"好" )).start();
+
+                        happy=layout.findViewById(R.id.mood_write_happy);
+                        normal=layout.findViewById(R.id.mood_write_normal);
+                        sad=layout.findViewById(R.id.mood_write_sad);
+                        boolean a=happy.isChecked(),
+                                b=normal.isChecked(),
+                                c=sad.isChecked();
+                        int tempMoodSrc=a?R.drawable.smiley_happy_big:(b?R.drawable.smiley_normal_big:(c?R.drawable.smiley_sad_big:9137852));//随便输入了一个错误代码。。。。
+                        if(tempMoodSrc!=9137852) {
+                            moodLineListTemp.clear();
+                            moodLineListTemp.addAll(moodLineList);
+                            moodLineList.clear();
+                            moodLineList.add(new MoodLine(tempMoodSrc, month + "月" + day + "日", editText.getText().toString() + "\n"));
+                            moodLineList.addAll(moodLineListTemp);
+                            //adapter=new MoodLineAdapter(moodLineList);
+                            //recyclerView.setAdapter(adapter);
+                            adapter.notifyDataSetChanged();
+                            try {
+                                new Thread(new PostCommentThread(mainActivity.getPersonalString("account"), editText.getText().toString(), a?"Happy":(b?"Normal":"Sad"),handler)).start();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                         }
-                        catch(Exception e)
-                        {
-                            e.printStackTrace();
-                        }
+                        else
+                            Toast.makeText(mainActivity,"没选择心情哦",Toast.LENGTH_SHORT).show();
                     }
                 });
         builder.show();
@@ -126,12 +134,32 @@ public class MoodFragment extends Fragment {
                         ResultSet resultSet=(ResultSet)msg.obj;
                         String tempContent,tempClass2;
                         String tempTime;
+                        int tempContentid;
+                        int tempMoodSrc;
                         while(resultSet.next()){
                             tempContent=resultSet.getString("content");
                             tempTime=resultSet.getString("time");
+                            tempContentid=resultSet.getInt("contentid");
                             tempClass2=resultSet.getString("class2");
                             String str=tempTime.substring(4,8);
-                            moodLineList.add(new MoodLine(R.drawable.happy,str.substring(0,2)+"月"+str.substring(2,4)+"日",tempContent));
+                            switch (tempClass2){
+                                case "Happy":
+                                case "褒":
+                                    tempMoodSrc=R.drawable.smiley_happy_big;
+                                    break;
+                                case "Normal":
+                                case "中":
+                                    tempMoodSrc=R.drawable.smiley_normal_big;
+                                    break;
+                                case "Sad":
+                                case "贬":
+                                    tempMoodSrc=R.drawable.smiley_sad_big;
+                                    break;
+                                default:
+                                    tempMoodSrc=R.drawable.smiley_happy_big;
+                                    break;
+                            }
+                            moodLineList.add(new MoodLine(tempMoodSrc,str.substring(0,2)+"月"+str.substring(2,4)+"日",tempContent,tempContentid));
                             adapter.notifyDataSetChanged();
 
                         }
@@ -141,7 +169,24 @@ public class MoodFragment extends Fragment {
                     }
                     break;
                 case 0:break;
+                case 4://4号消息：传送成功
+                case 3://3号消息：删除成功
+                    needRefresh =true;
+                    break;
             }
         }
     }
+
+    public void refreshMoodLine(){
+        try {
+            //开始从服务器载入之前清除已存在的
+            moodLineList.clear();
+            getPrivateCommentsThread = new GetPrivateCommentsThread(handler, mainActivity.getPersonalString("account"));
+            getPrivateCommentsThread.start();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
 }
