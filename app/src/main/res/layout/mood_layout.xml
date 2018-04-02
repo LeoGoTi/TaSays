@@ -26,7 +26,7 @@
                 android:orientation="horizontal">
 
                 <EditText
-                    android:id="@+id/search_home"
+                    android:id="@+id/search_mood"
                     android:layout_width="0sp"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
@@ -38,7 +38,7 @@
                     android:hint="探索你的心情轨迹" />
 
                 <FrameLayout
-                    android:id="@+id/search_home_button"
+                    android:id="@+id/search_mood_button"
                     android:layout_width="20sp"
                     android:layout_height="20sp"
                     android:layout_gravity="center_vertical"

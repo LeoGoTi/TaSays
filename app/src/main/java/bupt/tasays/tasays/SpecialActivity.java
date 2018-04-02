@@ -69,7 +69,7 @@ public class SpecialActivity extends AppCompatActivity {
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        adapter=new CommentAdapter(commentList);
+        adapter=new CommentAdapter(commentList,true);
         recyclerView.setAdapter(adapter);
         handler=new MyHandler();
         getCommentsThread=new GetCommentsThread(handler,type,userid);
@@ -110,5 +110,9 @@ public class SpecialActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         finish();
+    }
+
+    public int getUserid(){
+        return userid;
     }
 }

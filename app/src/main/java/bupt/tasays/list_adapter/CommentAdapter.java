@@ -16,6 +16,7 @@ import java.util.List;
 
 import bupt.tasays.tasays.MainActivity;
 import bupt.tasays.tasays.R;
+import bupt.tasays.tasays.SpecialActivity;
 import bupt.tasays.tasays.WebActivity;
 import bupt.tasays.web_sql.CollectionThread;
 
@@ -26,6 +27,8 @@ import bupt.tasays.web_sql.CollectionThread;
 public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHolder> {
     private List<Comment> mCommentList;
     private MainActivity mainActivity;
+    boolean isSpecial=false;
+    private SpecialActivity specialActivity;
 
     static class ViewHolder extends RecyclerView.ViewHolder
     {
@@ -53,6 +56,12 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         mCommentList=commentList;
     }
 
+    public CommentAdapter(List<Comment> commentList,boolean isSpecial)
+    {
+        mCommentList=commentList;
+        this.isSpecial=isSpecial;
+    }
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent,int viewtype)
     {
@@ -66,8 +75,10 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
     public void onBindViewHolder(final ViewHolder holder, int position)
     {
         final Comment comment=mCommentList.get(position);
-        if(mainActivity==null)
-            mainActivity=(MainActivity) holder.love.getContext();
+        if(!isSpecial){
+            if(mainActivity==null)
+                mainActivity=(MainActivity) holder.love.getContext();
+        }
         holder.commentContent.setText(comment.getComment());
         holder.commentUser.setText(comment.getUser_id());
         holder.commentSong.setText(comment.getSong());
@@ -87,12 +98,18 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             @Override
             public void like(boolean like) {
                     Toast.makeText(holder.love.getContext(),like?"收藏成功":"取消收藏",Toast.LENGTH_SHORT).show();
-                    try{
-                        int userid=mainActivity.getPersonalInt("userid");
-                        new Thread(new CollectionThread(comment.getContentid(),userid,like)).start();
+                    if(!isSpecial){
+                        try{
+                            int userid=mainActivity.getPersonalInt("userid");
+                            new Thread(new CollectionThread(comment.getContentid(),userid,like)).start();
+                        }
+                        catch(Exception e){
+                            e.printStackTrace();
+                        }
                     }
-                    catch(Exception e){
-                        e.printStackTrace();
+                    else {
+                        int userid=((SpecialActivity)holder.love.getContext()).getUserid();
+                        new Thread(new CollectionThread(comment.getContentid(),userid,like)).start();
                     }
 
             }

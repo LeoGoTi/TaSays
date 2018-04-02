@@ -32,6 +32,9 @@ public class AdapterViewpager extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, final int position) {//必须实现，实例化
+        ViewGroup temp=((ViewGroup)mViewList.get(position).getParent());
+        if(temp!=null)
+            temp.removeView(mViewList.get(position));
         container.addView(mViewList.get(position));
         mViewList.get(position).setOnClickListener(new View.OnClickListener() {
             @Override

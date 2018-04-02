@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.os.Handler;
 import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -13,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
@@ -25,6 +27,7 @@ import bupt.tasays.list_adapter.MoodLine;
 import bupt.tasays.list_adapter.MoodLineAdapter;
 import bupt.tasays.web_sql.GetPrivateCommentsThread;
 import bupt.tasays.web_sql.PostCommentThread;
+import bupt.tasays.web_sql.WebService;
 
 
 /**
@@ -36,15 +39,22 @@ public class MoodFragment extends Fragment {
     private static List<MoodLine> moodLineListTemp=new ArrayList<>();
     static MoodLineAdapter adapter;
     FloatingActionButton floatingActionButton;
+    FrameLayout search;
     RecyclerView recyclerView;
     MainActivity mainActivity;
     private static Handler handler;
     private static GetPrivateCommentsThread getPrivateCommentsThread;
     private RadioButton happy,normal,sad;
     private static boolean needRefresh =false;
+    View view;
+
+    String back;
+    int [] tempArray=new int[20];
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        View view = inflater.inflate(R.layout.mood_layout, container, false);
+        view = inflater.inflate(R.layout.mood_layout, container, false);
+        mainActivity=(MainActivity)getActivity();
         recyclerView=view.findViewById(R.id.mood_recycler);
         floatingActionButton=view.findViewById(R.id.mood_write);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
@@ -53,7 +63,37 @@ public class MoodFragment extends Fragment {
                 showDialog();
             }
         });
-        mainActivity=(MainActivity)getActivity();
+        search=view.findViewById(R.id.search_mood_button);
+        search.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+//                new Thread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        String tempString= WebService.executeGetIDs("test");//这一段都要放到心情那边的
+//                        if(tempString!=null){
+//                            back=tempString;
+//                        }
+//                    }
+//                }).start();
+//                while(back==null);
+//                Snackbar.make(view,"写入成功，看看我们给你的推荐吧！",Snackbar.LENGTH_SHORT)
+//                        .setAction("好的", new View.OnClickListener() {
+//                            @Override
+//                            public void onClick(View view) {
+//                                HomeFragment homeFragment=new HomeFragment();
+//                                int tempCount=stringToArray(back);
+//                                back=null;
+//                                homeFragment.setFromMood(tempArray,tempCount);
+//                                mainActivity.p1.setImageResource(R.drawable.zhuye);
+//                                mainActivity.p3.setImageResource(R.drawable.xinqing_1);
+//                                mainActivity.p4.setImageResource(R.drawable.geren_1);
+//                                mainActivity.replaceFragment(homeFragment);
+//                            }
+//                        }).show();
+            }
+        });
         LinearLayoutManager layoutManager=new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         handler=new MyHandler();
@@ -117,6 +157,31 @@ public class MoodFragment extends Fragment {
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
+                            new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    String tempString= WebService.executeGetIDs("test");//这一段都要放到心情那边的
+                                    if(tempString!=null){
+                                        back=tempString;
+                                    }
+                                }
+                            }).start();
+                            while(back==null);
+                            Snackbar.make(recyclerView,"写入成功，看看我们给你的推荐吧！",Snackbar.LENGTH_LONG)
+                                    .setAction("好的", new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            HomeFragment homeFragment=new HomeFragment();
+                                            mainActivity.homeFragment=homeFragment;
+                                            int tempCount=stringToArray(back);
+                                            back=null;
+                                            homeFragment.setFromMood(tempArray,tempCount);
+                                            mainActivity.p1.setImageResource(R.drawable.zhuye);
+                                            mainActivity.p3.setImageResource(R.drawable.xinqing_1);
+                                            mainActivity.p4.setImageResource(R.drawable.geren_1);
+                                            mainActivity.replaceFragment(homeFragment);
+                                        }
+                                    }).show();
                         }
                         else
                             Toast.makeText(mainActivity,"没选择心情哦",Toast.LENGTH_SHORT).show();
@@ -189,4 +254,16 @@ public class MoodFragment extends Fragment {
         }
     }
 
+    public int stringToArray(String back)//返回个数
+    {
+        int count=0;
+        int i=0;
+        String[] arrayStr=back.split(",");
+        while (i<arrayStr.length){
+            tempArray[i]=Integer.parseInt(arrayStr[i]);
+            i++;
+            count++;
+        }
+        return count;
+    }
 }
