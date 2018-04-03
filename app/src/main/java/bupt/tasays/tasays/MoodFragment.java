@@ -49,6 +49,7 @@ public class MoodFragment extends Fragment {
     private RadioButton happy,normal,sad;
     private static boolean needRefresh =false;
     private static boolean needWait=false;
+    static ProgressDialog progressDialog;
     View view;
 
     String back;
@@ -67,36 +68,6 @@ public class MoodFragment extends Fragment {
             }
         });
         search=view.findViewById(R.id.search_mood_button);
-        search.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-//                new Thread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        String tempString= WebService.executeGetIDs("test");//这一段都要放到心情那边的
-//                        if(tempString!=null){
-//                            back=tempString;
-//                        }
-//                    }
-//                }).start();
-//                while(back==null);
-//                Snackbar.make(view,"写入成功，看看我们给你的推荐吧！",Snackbar.LENGTH_SHORT)
-//                        .setAction("好的", new View.OnClickListener() {
-//                            @Override
-//                            public void onClick(View view) {
-//                                HomeFragment homeFragment=new HomeFragment();
-//                                int tempCount=stringToArray(back);
-//                                back=null;
-//                                homeFragment.setFromMood(tempArray,tempCount);
-//                                mainActivity.p1.setImageResource(R.drawable.zhuye);
-//                                mainActivity.p3.setImageResource(R.drawable.xinqing_1);
-//                                mainActivity.p4.setImageResource(R.drawable.geren_1);
-//                                mainActivity.replaceFragment(homeFragment);
-//                            }
-//                        }).show();
-            }
-        });
         LinearLayoutManager layoutManager=new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         handler=new MyHandler();
@@ -116,25 +87,29 @@ public class MoodFragment extends Fragment {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                while(!needWait);
-                Looper.prepare();
-                while (back==null);
-                needWait=false;
-                Snackbar.make(recyclerView,"写入成功，看看我们给你的推荐吧！",Snackbar.LENGTH_LONG)
-                        .setAction("好的", new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                HomeFragment homeFragment=new HomeFragment();
-                                mainActivity.homeFragment=homeFragment;
-                                int tempCount=stringToArray(back);
-                                back=null;
-                                homeFragment.setFromMood(tempArray,tempCount);
-                                mainActivity.p1.setImageResource(R.drawable.zhuye);
-                                mainActivity.p3.setImageResource(R.drawable.xinqing_1);
-                                mainActivity.p4.setImageResource(R.drawable.geren_1);
-                                mainActivity.replaceFragment(homeFragment);
-                            }
-                        }).show();
+                    while (true){
+                    while(!needWait);
+                    if(Looper.myLooper()==null)
+                        Looper.prepare();
+                    while (back==null);
+                    progressDialog.dismiss();
+                    needWait=false;
+                    Snackbar.make(recyclerView,"写入成功，看看我们给你的推荐吧！",Snackbar.LENGTH_LONG)
+                            .setAction("好的", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    HomeFragment homeFragment=new HomeFragment();
+                                    mainActivity.homeFragment=homeFragment;
+                                    int tempCount=stringToArray(back);
+                                    back=null;
+                                    homeFragment.setFromMood(tempArray,tempCount);
+                                    mainActivity.p1.setImageResource(R.drawable.zhuye);
+                                    mainActivity.p3.setImageResource(R.drawable.xinqing_1);
+                                    mainActivity.p4.setImageResource(R.drawable.geren_1);
+                                    mainActivity.replaceFragment(homeFragment);
+                                }
+                            }).show();
+                }
             }
         }).start();
         return view;
@@ -162,7 +137,6 @@ public class MoodFragment extends Fragment {
                         Calendar calendar = Calendar.getInstance();
                         int month = calendar.get(Calendar.MONTH)+1;
                         int day = calendar.get(Calendar.DAY_OF_MONTH);
-
                         happy=layout.findViewById(R.id.mood_write_happy);
                         normal=layout.findViewById(R.id.mood_write_normal);
                         sad=layout.findViewById(R.id.mood_write_sad);
@@ -179,11 +153,31 @@ public class MoodFragment extends Fragment {
                             //adapter=new MoodLineAdapter(moodLineList);
                             //recyclerView.setAdapter(adapter);
                             adapter.notifyDataSetChanged();
+
+                            progressDialog=new ProgressDialog(mainActivity);
+                            progressDialog.setMessage("加载中，请稍候");
+                            progressDialog.show();
+
                             try {
                                 new Thread(new PostCommentThread(mainActivity.getPersonalString("account"), editText.getText().toString(), a?"Happy":(b?"Normal":"Sad"),handler)).start();
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
+                            new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    try {
+                                        String tempString = WebService.executeGetIDs(Integer.toString(mainActivity.getPersonalInt("userid")), "1");//这一段都要放到心情那边的//改成id
+                                        if (tempString != null) {
+                                            back = tempString;
+                                        }
+                                    }
+                                    catch (Exception e){
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }).start();
+                            needWait=true;
                         }
                         else
                             Toast.makeText(mainActivity,"没选择心情哦",Toast.LENGTH_SHORT).show();
@@ -195,21 +189,7 @@ public class MoodFragment extends Fragment {
                 //dialog代替等待
                 //while(back==null);
 
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            String tempString = WebService.executeGetIDs(Integer.toString(mainActivity.getPersonalInt("userid")), "1");//这一段都要放到心情那边的//改成id
-                            if (tempString != null) {
-                                back = tempString;
-                            }
-                        }
-                        catch (Exception e){
-                            e.printStackTrace();
-                        }
-                    }
-                }).start();
-                needWait=true;
+
             }
         });
         builder.show();
