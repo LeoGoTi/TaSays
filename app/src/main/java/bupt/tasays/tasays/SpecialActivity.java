@@ -40,6 +40,7 @@ public class SpecialActivity extends AppCompatActivity {
         userid=intent.getIntExtra("userid",1000);
         specialImage=findViewById(R.id.special_image);
         recyclerView=findViewById(R.id.special_recycler);
+        recyclerView.setNestedScrollingEnabled(false);
         textView=findViewById(R.id.special_text);
         textType=findViewById(R.id.special_type);
         //加载图片

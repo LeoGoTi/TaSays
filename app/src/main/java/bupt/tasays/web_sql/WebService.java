@@ -12,6 +12,7 @@ import java.net.URL;
 public class WebService {
     // IP地址
     private static String IP = "39.107.121.30:8080";
+    private static boolean tenPassed=false;
     //把TOMCATURL改为你的服务器地址
 
     /**
@@ -30,8 +31,8 @@ public class WebService {
             path = path + url + "?account=" + account + "&password=" + password;
 
             conn = (HttpURLConnection) new URL(path).openConnection();
-            conn.setConnectTimeout(3000); // 设置超时时间
-            conn.setReadTimeout(3000);
+            conn.setConnectTimeout(30000); // 设置超时时间
+            conn.setReadTimeout(30000);
             conn.setDoInput(true);
             conn.setRequestMethod("GET"); // 设置获取信息方式
             conn.setRequestProperty("Charset", "UTF-8"); // 设置接收数据编码格式
@@ -72,8 +73,8 @@ public class WebService {
             path = path + url + "?account=" + account;
 
             conn = (HttpURLConnection) new URL(path).openConnection();
-            conn.setConnectTimeout(3000); // 设置超时时间
-            conn.setReadTimeout(3000);
+            conn.setConnectTimeout(30000); // 设置超时时间
+            conn.setReadTimeout(30000);
             conn.setDoInput(true);
             conn.setRequestMethod("GET"); // 设置获取信息方式
             conn.setRequestProperty("Charset", "UTF-8"); // 设置接收数据编码格式
@@ -114,8 +115,8 @@ public class WebService {
             path = path + url + "?" + infoString;
 
             conn = (HttpURLConnection) new URL(path).openConnection();
-            conn.setConnectTimeout(3000); // 设置超时时间
-            conn.setReadTimeout(3000);
+            conn.setConnectTimeout(30000); // 设置超时时间
+            conn.setReadTimeout(30000);
             conn.setDoInput(true);
             conn.setRequestMethod("GET"); // 设置获取信息方式
             conn.setRequestProperty("Charset", "UTF-8"); // 设置接收数据编码格式
@@ -158,8 +159,8 @@ public class WebService {
                     "&phonenum="+phonenum;
 
             conn = (HttpURLConnection) new URL(path).openConnection();
-            conn.setConnectTimeout(3000); // 设置超时时间
-            conn.setReadTimeout(3000);
+            conn.setConnectTimeout(30000); // 设置超时时间
+            conn.setReadTimeout(30000);
             conn.setDoInput(true);
             conn.setRequestMethod("GET"); // 设置获取信息方式
             conn.setRequestProperty("Charset", "UTF-8"); // 设置接收数据编码格式
@@ -189,22 +190,39 @@ public class WebService {
         return "服务器连接超时...";
     }
 
-    public static String executeGetIDs(String content) {
+    public static String executeGetIDs(String content,String type) {
         HttpURLConnection conn = null;
         InputStream is = null;
 
         try {
             // 用户名 密码
             // URL 地址
-            String path = "http://" + IP + "/Server/TestLet?content="+content;
+            String path = "http://" + IP + "/Server/TestLet?content="+content+
+                    "&type="+type;
 
             conn = (HttpURLConnection) new URL(path).openConnection();
-            conn.setConnectTimeout(3000); // 设置超时时间
-            conn.setReadTimeout(3000);
+            conn.setConnectTimeout(30000); // 设置超时时间
+            conn.setReadTimeout(30000);
             conn.setDoInput(true);
             conn.setRequestMethod("GET"); // 设置获取信息方式
             conn.setRequestProperty("Charset", "UTF-8"); // 设置接收数据编码格式
 
+//            new Thread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    try{
+//                    Thread.sleep(10000);}
+//                    catch (Exception e)
+//                    {
+//                        e.printStackTrace();
+//                    }
+//                    finally {
+//                        tenPassed=true;
+//                    }
+//                }
+//            }).start();
+//
+//            while(!tenPassed);
             if (conn.getResponseCode() == 200) {
                 is = conn.getInputStream();
                 return parseInfo(is);

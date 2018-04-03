@@ -1,8 +1,11 @@
 package bupt.tasays.tasays;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -17,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import bupt.tasays.list_adapter.AdapterViewpager;
@@ -52,6 +56,7 @@ public class HomeFragment extends Fragment{
     static AdapterViewpager adapterViewpager;
     private FrameLayout search;
     MainActivity mainActivity;
+    ProgressDialog progressDialog;
     private static String type=null;
 
     String back;
@@ -80,6 +85,7 @@ public class HomeFragment extends Fragment{
                     startActivity(intent);
             }
         }).start();
+        progressDialog=new ProgressDialog(mainActivity);
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.main_recycler);
         recyclerView.setNestedScrollingEnabled(false);
         FrameLayout frameLayout=view.findViewById(R.id.main_home_frame);
@@ -93,21 +99,31 @@ public class HomeFragment extends Fragment{
                     String content=editText.getText().toString();
                     @Override
                     public void run() {
-                        String tempString= WebService.executeGetIDs(content);
-                        if(tempString!=null){
-                            back=tempString;
-                        }
+                        String tempString= WebService.executeGetIDs(content,"0");
+                        while(tempString==null);
+                        back=tempString;
                     }
                 }).start();
-                while(back==null);
-                HomeFragment homeFragment=new HomeFragment();
-                mainActivity.homeFragment=homeFragment;
-                int tempCount=stringToArray(back);
-                back=null;
-                homeFragment.setFromMood(tempArray,tempCount);
-                mainActivity.replaceFragment(homeFragment);
+                progressDialog.setMessage("请求中，请稍候");
+                progressDialog.show();
             }
         });
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while(true){
+                    while(back==null);
+                    Looper.prepare();
+                    progressDialog.dismiss();
+                    HomeFragment homeFragment=new HomeFragment();
+                    mainActivity.homeFragment=homeFragment;
+                    int tempCount=stringToArray(back);
+                    back=null;
+                    homeFragment.setFromMood(tempArray,tempCount);
+                    mainActivity.replaceFragment(homeFragment);
+                }
+            }
+        }).start();//监视返回信息back处理情况
         frameLayout.setFocusable(true);
         frameLayout.setFocusableInTouchMode(true);
         final ViewPager viewPager=view.findViewById(R.id.view_pager);

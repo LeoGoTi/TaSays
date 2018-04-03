@@ -1,7 +1,9 @@
 package bupt.tasays.tasays;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -46,6 +48,7 @@ public class MoodFragment extends Fragment {
     private static GetPrivateCommentsThread getPrivateCommentsThread;
     private RadioButton happy,normal,sad;
     private static boolean needRefresh =false;
+    private static boolean needWait=false;
     View view;
 
     String back;
@@ -109,12 +112,36 @@ public class MoodFragment extends Fragment {
                     needRefresh =false;
                 }
             }
+        }).start();//监听刷新事件
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while(!needWait);
+                Looper.prepare();
+                while (back==null);
+                needWait=false;
+                Snackbar.make(recyclerView,"写入成功，看看我们给你的推荐吧！",Snackbar.LENGTH_LONG)
+                        .setAction("好的", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                HomeFragment homeFragment=new HomeFragment();
+                                mainActivity.homeFragment=homeFragment;
+                                int tempCount=stringToArray(back);
+                                back=null;
+                                homeFragment.setFromMood(tempArray,tempCount);
+                                mainActivity.p1.setImageResource(R.drawable.zhuye);
+                                mainActivity.p3.setImageResource(R.drawable.xinqing_1);
+                                mainActivity.p4.setImageResource(R.drawable.geren_1);
+                                mainActivity.replaceFragment(homeFragment);
+                            }
+                        }).show();
+            }
         }).start();
         return view;
     }
 
     public void showDialog(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getLayoutInflater();
         final View layout = inflater.inflate(R.layout.mood_write, null);//获取自定义布局
         builder.setView(layout);
@@ -157,36 +184,34 @@ public class MoodFragment extends Fragment {
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
-                            new Thread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    String tempString= WebService.executeGetIDs("test");//这一段都要放到心情那边的
-                                    if(tempString!=null){
-                                        back=tempString;
-                                    }
-                                }
-                            }).start();
-                            while(back==null);
-                            Snackbar.make(recyclerView,"写入成功，看看我们给你的推荐吧！",Snackbar.LENGTH_LONG)
-                                    .setAction("好的", new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View view) {
-                                            HomeFragment homeFragment=new HomeFragment();
-                                            mainActivity.homeFragment=homeFragment;
-                                            int tempCount=stringToArray(back);
-                                            back=null;
-                                            homeFragment.setFromMood(tempArray,tempCount);
-                                            mainActivity.p1.setImageResource(R.drawable.zhuye);
-                                            mainActivity.p3.setImageResource(R.drawable.xinqing_1);
-                                            mainActivity.p4.setImageResource(R.drawable.geren_1);
-                                            mainActivity.replaceFragment(homeFragment);
-                                        }
-                                    }).show();
                         }
                         else
                             Toast.makeText(mainActivity,"没选择心情哦",Toast.LENGTH_SHORT).show();
                     }
-                });
+                })
+        .setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialogInterface) {
+                //dialog代替等待
+                //while(back==null);
+
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            String tempString = WebService.executeGetIDs(Integer.toString(mainActivity.getPersonalInt("userid")), "1");//这一段都要放到心情那边的//改成id
+                            if (tempString != null) {
+                                back = tempString;
+                            }
+                        }
+                        catch (Exception e){
+                            e.printStackTrace();
+                        }
+                    }
+                }).start();
+                needWait=true;
+            }
+        });
         builder.show();
     }
 

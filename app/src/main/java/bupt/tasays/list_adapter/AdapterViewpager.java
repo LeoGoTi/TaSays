@@ -71,5 +71,4 @@ public class AdapterViewpager extends PagerAdapter {
         this.handler=handler;
     }
 
-
 }

@@ -56,8 +56,8 @@ public class GetCommentsThread extends Thread{
         }
         else
         {
-            sql = "SELECT content,songname,singername,url,contentid,exists(select * from collection where userid=" + userid + " and collection.contentid=comments.contentid) as isliked\n" +
-                    "from comments,songinfo where comments.songid=songinfo.songid "+generateID()+" order by rand() LIMIT 20;";
+            sql = "SELECT content,songname,singername,url,contentid,exists(select * from collection where userid=" + userid + " and collection.contentid=commenta.contentid) as isliked\n" +
+                    "from commenta,songinfo where commenta.songid=songinfo.songid "+generateID()+" order by rand() LIMIT 20;";//改了a了
             dbManager = DBManager.createInstance();
             dbManager.connectDB();
             ResultSet resultSet = dbManager.executeQuery(sql);
