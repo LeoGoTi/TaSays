@@ -1,13 +1,11 @@
 package bupt.tasays.tasays;
 
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -49,7 +47,8 @@ public class HomeFragment extends Fragment{
     private static boolean fromMood = false;// 从心情过来，判断是否根据心情上传后，服务器返回的结果进行主页展示
     private static int [] contentids=new int[50];
     private static int contentCount=-1;
-
+    ViewPager viewPager;
+    CircleIndicator circleIndicator;
     private GetCommentsThread getCommentsThread;
     private static Handler handler;
     static CommentAdapter adapter;
@@ -70,6 +69,7 @@ public class HomeFragment extends Fragment{
         new Thread(new Runnable() {
             @Override
             public void run() {
+                while(true){
                 while(type==null);
                 while(mainActivity==null);
                 Intent intent=new Intent(mainActivity,SpecialActivity.class);
@@ -82,7 +82,7 @@ public class HomeFragment extends Fragment{
                 }
                 type=null;
                 if(h.isAdded())
-                    startActivity(intent);
+                    startActivity(intent);}
             }
         }).start();
         progressDialog=new ProgressDialog(mainActivity);
@@ -126,8 +126,8 @@ public class HomeFragment extends Fragment{
         }).start();//监视返回信息back处理情况
         frameLayout.setFocusable(true);
         frameLayout.setFocusableInTouchMode(true);
-        final ViewPager viewPager=view.findViewById(R.id.view_pager);
-        CircleIndicator circleIndicator=view.findViewById(R.id.indicator);
+        viewPager=view.findViewById(R.id.view_pager);
+        circleIndicator=view.findViewById(R.id.indicator);
         adapterViewpager=new AdapterViewpager(viewList);
         if(!added)addAd();
         viewPager.setAdapter(adapterViewpager);
