@@ -70,7 +70,14 @@ public class HomeFragment extends Fragment{
             @Override
             public void run() {
                 while(true){
-                while(type==null);
+                while(type==null){
+                    try {
+                        Thread.sleep(300);
+                    }
+                    catch (Exception e){
+                        e.printStackTrace();
+                    }
+                };
                 while(mainActivity==null);
                 Intent intent=new Intent(mainActivity,SpecialActivity.class);
                 intent.putExtra("type",type);
@@ -100,7 +107,14 @@ public class HomeFragment extends Fragment{
                     @Override
                     public void run() {
                         String tempString= WebService.executeGetIDs(content,"0");
-                        while(tempString==null);
+                        while(tempString==null){
+                            try {
+                                Thread.sleep(300);
+                            }
+                            catch (Exception e){
+                                e.printStackTrace();
+                            }
+                        };
                         back=tempString;
                     }
                 }).start();
@@ -112,7 +126,14 @@ public class HomeFragment extends Fragment{
             @Override
             public void run() {
                 while(true){
-                    while(back==null);
+                    while(back==null){
+                        try {
+                            Thread.sleep(300);
+                        }
+                        catch (Exception e){
+                            e.printStackTrace();
+                        }
+                    };
                     Looper.prepare();
                     progressDialog.dismiss();
                     HomeFragment homeFragment=new HomeFragment();

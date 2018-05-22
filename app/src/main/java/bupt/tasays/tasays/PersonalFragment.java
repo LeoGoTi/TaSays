@@ -18,15 +18,14 @@ import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-
 import bupt.tasays.web_sql.WebService;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -43,8 +42,7 @@ public class PersonalFragment extends Fragment {
     private MainActivity mainActivity = (MainActivity) getActivity();
     private int birthY = 1990, birthM = 1, birthD = 1;
     private View fragmentView, view;
-
-    private ImageView portrait;
+    private CircleImageView portrait;
     private Bitmap head;// 头像Bitmap
     private static String path = "/sdcard/myHead/";// sd路径
 
@@ -139,14 +137,13 @@ public class PersonalFragment extends Fragment {
         AlertDialog.Builder builder= new AlertDialog.Builder(getActivity());
         final AlertDialog dialog=builder.create();
         View v = View.inflate(getActivity(),R.layout.type_select_dialog,null);
-        CardView upload=v.findViewById(R.id.type_upload),
+        CardView select=v.findViewById(R.id.type_upload),
                  camera=v.findViewById(R.id.type_camera);
-        upload.setOnClickListener(new View.OnClickListener() {
+        select.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent1= new Intent(Intent.ACTION_PICK,null);
-                intent1.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,"image/*");
-                startActivityForResult(intent1,1);
+                Intent intent=new Intent(mainActivity,LocalHeadsActivity.class);
+                startActivityForResult(intent,9);
                 dialog.dismiss();
             }
         });
@@ -194,6 +191,13 @@ public class PersonalFragment extends Fragment {
                         setPicToView(head);// 保存在SD卡中
                         portrait.setImageBitmap(head);// 用ImageView显示出来
                     }
+                }
+                break;
+            case 9://头像选择完成
+                String toReturn=data.getStringExtra("new_head");
+                switch (toReturn){
+                    case "p1":
+                        portrait.setImageResource(R.drawable.p1);
                 }
                 break;
             default:

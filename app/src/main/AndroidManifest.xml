@@ -30,9 +30,10 @@
         <activity android:name=".LoginActivity" />
         <activity android:name=".WebActivity" />
         <activity android:name=".RegisterActivity" />
-        <activity android:name=".MainActivity"/>
+        <activity android:name=".MainActivity" />
         <activity android:name=".TimePickerTest" />
-        <activity android:name=".SpecialActivity"/>
+        <activity android:name=".SpecialActivity" />
+        <activity android:name=".LocalHeadsActivity"></activity>
     </application>
 
 </manifest>

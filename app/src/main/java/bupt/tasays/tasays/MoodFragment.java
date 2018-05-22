@@ -78,7 +78,14 @@ public class MoodFragment extends Fragment {
             @Override
             public void run() {
                 while(true){
-                    while(!needRefresh);
+                    while(!needRefresh){
+                        try {
+                            Thread.sleep(300);
+                        }
+                        catch (Exception e){
+                            e.printStackTrace();
+                        }
+                    };
                     refreshMoodLine();
                     needRefresh =false;
                 }
@@ -88,10 +95,24 @@ public class MoodFragment extends Fragment {
             @Override
             public void run() {
                     while (true){
-                    while(!needWait);
+                    while(!needWait){
+                        try {
+                            Thread.sleep(300);
+                        }
+                        catch (Exception e){
+                            e.printStackTrace();
+                        }
+                    };
                     if(Looper.myLooper()==null)
                         Looper.prepare();
-                    while (back==null);
+                    while (back==null){
+                        try {
+                            Thread.sleep(300);
+                        }
+                        catch (Exception e){
+                            e.printStackTrace();
+                        }
+                    }
                     progressDialog.dismiss();
                     needWait=false;
                     Snackbar.make(recyclerView,"写入成功，看看我们给你的推荐吧！",Snackbar.LENGTH_LONG)
@@ -108,7 +129,7 @@ public class MoodFragment extends Fragment {
                                     mainActivity.p4.setImageResource(R.drawable.geren_1);
                                     mainActivity.replaceFragment(homeFragment);
                                 }
-                            }).show();
+                            }).setDuration(Snackbar.LENGTH_LONG).show();
                 }
             }
         }).start();
