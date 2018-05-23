@@ -128,40 +128,10 @@ public class PersonalFragment extends Fragment {
         portrait.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showTypeDialog();
-            }
-        });
-    }
-
-    public void showTypeDialog(){
-        AlertDialog.Builder builder= new AlertDialog.Builder(getActivity());
-        final AlertDialog dialog=builder.create();
-        View v = View.inflate(getActivity(),R.layout.type_select_dialog,null);
-        CardView select=v.findViewById(R.id.type_upload),
-                 camera=v.findViewById(R.id.type_camera);
-        select.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
                 Intent intent=new Intent(mainActivity,LocalHeadsActivity.class);
                 startActivityForResult(intent,9);
-                dialog.dismiss();
             }
         });
-        //
-        //  需要解决安卓7.0拍照问题
-        //
-        camera.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent2 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                intent2.putExtra(MediaStore.EXTRA_OUTPUT,
-                        Uri.fromFile(new File(Environment.getExternalStorageDirectory(), "head.jpg")));
-                startActivityForResult(intent2, 2);// 采用ForResult打开
-                dialog.dismiss();
-            }
-        });
-        dialog.setView(v);
-        dialog.show();
     }
 
     @Override
@@ -194,11 +164,8 @@ public class PersonalFragment extends Fragment {
                 }
                 break;
             case 9://头像选择完成
-                String toReturn=data.getStringExtra("new_head");
-                switch (toReturn){
-                    case "p1":
-                        portrait.setImageResource(R.drawable.p1);
-                }
+                int toReturn=data.getIntExtra("new_head",0);
+                portrait.setImageResource(toReturn);
                 break;
             default:
                 break;

@@ -38,15 +38,15 @@ import java.util.List;
  * Created by root on 17-12-11.
  */
 
-public class HomeFragment extends Fragment{
+public class HomeFragment extends Fragment {
     private static List<Comment> commentList = new ArrayList<>();
-    private static List<View> viewList=new ArrayList<>();
+    private static List<View> viewList = new ArrayList<>();
     View view;
     private static boolean added = false;//主页添加完成标志
 
     private static boolean fromMood = false;// 从心情过来，判断是否根据心情上传后，服务器返回的结果进行主页展示
-    private static int [] contentids=new int[50];
-    private static int contentCount=-1;
+    private static int[] contentids = new int[50];
+    private static int contentCount = -1;
     ViewPager viewPager;
     CircleIndicator circleIndicator;
     private GetCommentsThread getCommentsThread;
@@ -56,101 +56,135 @@ public class HomeFragment extends Fragment{
     private FrameLayout search;
     MainActivity mainActivity;
     ProgressDialog progressDialog;
-    private static String type=null;
-
+    private static String type = null;
     String back;
-    int [] tempArray=new int[20];
-    HomeFragment h=this;
+    int[] tempArray = new int[20];
+    HomeFragment h = this;
+
+    public class Variablechanger{
+        public Variablechanger(){}
+        //使用变量封装实现监听
+        public  void changeVariable(String name, Object o) {
+            switch (name) {
+                case "back":
+                    back = (String) o;
+                    progressDialog.dismiss();
+                    HomeFragment homeFragment = new HomeFragment();
+                    mainActivity.homeFragment = homeFragment;
+                    int tempCount = stringToArray(back);
+                    back = null;
+                    homeFragment.setFromMood(tempArray, tempCount);
+                    mainActivity.replaceFragment(homeFragment);
+                    break;
+                case "type":
+                    type=(String)o;
+                    Intent intent = new Intent(mainActivity, SpecialActivity.class);
+                    intent.putExtra("type", type);
+                    try {
+                        intent.putExtra("userid", mainActivity.getPersonalInt("userid"));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    type = null;
+                    if (h.isAdded())
+                        startActivity(intent);
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    private Variablechanger changer=new Variablechanger();
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.home_layout, container, false);
-        type=null;
-        mainActivity=(MainActivity)getActivity();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while(true){
-                while(type==null){
-                    try {
-                        Thread.sleep(300);
-                    }
-                    catch (Exception e){
-                        e.printStackTrace();
-                    }
-                };
-                while(mainActivity==null);
-                Intent intent=new Intent(mainActivity,SpecialActivity.class);
-                intent.putExtra("type",type);
-                try {
-                    intent.putExtra("userid", mainActivity.getPersonalInt("userid"));
-                }
-                catch (Exception e){
-                    e.printStackTrace();
-                }
-                type=null;
-                if(h.isAdded())
-                    startActivity(intent);}
-            }
-        }).start();
-        progressDialog=new ProgressDialog(mainActivity);
+        type = null;
+        mainActivity = (MainActivity) getActivity();
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                while (true) {
+//                    while (type == null) {
+//                        try {
+//                            Thread.sleep(300);
+//                        } catch (Exception e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                    while (mainActivity == null) ;
+//                    Intent intent = new Intent(mainActivity, SpecialActivity.class);
+//                    intent.putExtra("type", type);
+//                    try {
+//                        intent.putExtra("userid", mainActivity.getPersonalInt("userid"));
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                    }
+//                    type = null;
+//                    if (h.isAdded())
+//                        startActivity(intent);
+//                }
+//            }
+//        }).start();
+        progressDialog = new ProgressDialog(mainActivity);
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.main_recycler);
         recyclerView.setNestedScrollingEnabled(false);
-        FrameLayout frameLayout=view.findViewById(R.id.main_home_frame);
-        final EditText editText=view.findViewById(R.id.search_home);
-        search=view.findViewById(R.id.search_home_button);
+        FrameLayout frameLayout = view.findViewById(R.id.main_home_frame);
+        final EditText editText = view.findViewById(R.id.search_home);
+        search = view.findViewById(R.id.search_home_button);
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 new Thread(new Runnable() {
-                    String content=editText.getText().toString();
+                    String content = editText.getText().toString();
+
                     @Override
                     public void run() {
-                        String tempString= WebService.executeGetIDs(content,"0");
-                        while(tempString==null){
+                        String tempString = WebService.executeGetIDs(content, "0");
+                        while (tempString == null) {
                             try {
                                 Thread.sleep(300);
-                            }
-                            catch (Exception e){
+                            } catch (Exception e) {
                                 e.printStackTrace();
                             }
-                        };
-                        back=tempString;
+                        }
+                        changer.changeVariable("back", tempString);
                     }
                 }).start();
                 progressDialog.setMessage("请求中，请稍候");
                 progressDialog.show();
             }
         });
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while(true){
-                    while(back==null){
-                        try {
-                            Thread.sleep(300);
-                        }
-                        catch (Exception e){
-                            e.printStackTrace();
-                        }
-                    };
-                    Looper.prepare();
-                    progressDialog.dismiss();
-                    HomeFragment homeFragment=new HomeFragment();
-                    mainActivity.homeFragment=homeFragment;
-                    int tempCount=stringToArray(back);
-                    back=null;
-                    homeFragment.setFromMood(tempArray,tempCount);
-                    mainActivity.replaceFragment(homeFragment);
-                }
-            }
-        }).start();//监视返回信息back处理情况
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                while(true){
+//                    while(back==null){
+//                        try {
+//                            Thread.sleep(300);
+//                        }
+//                        catch (Exception e){
+//                            e.printStackTrace();
+//                        }
+//                    };
+//                    Looper.prepare();
+//                    progressDialog.dismiss();
+//                    HomeFragment homeFragment=new HomeFragment();
+//                    mainActivity.homeFragment=homeFragment;
+//                    int tempCount=stringToArray(back);
+//                    back=null;
+//                    homeFragment.setFromMood(tempArray,tempCount);
+//                    mainActivity.replaceFragment(homeFragment);
+//                }
+//            }
+//        }).start();//监视返回信息back处理情况
         frameLayout.setFocusable(true);
         frameLayout.setFocusableInTouchMode(true);
-        viewPager=view.findViewById(R.id.view_pager);
-        circleIndicator=view.findViewById(R.id.indicator);
-        adapterViewpager=new AdapterViewpager(viewList);
-        if(!added)addAd();
+        viewPager = view.findViewById(R.id.view_pager);
+        circleIndicator = view.findViewById(R.id.indicator);
+        adapterViewpager = new AdapterViewpager(viewList);
+        if (!added) addAd();
         viewPager.setAdapter(adapterViewpager);
         circleIndicator.setViewPager(viewPager);
 
@@ -159,66 +193,62 @@ public class HomeFragment extends Fragment{
         adapter = new CommentAdapter(commentList);
 
         recyclerView.setAdapter(adapter);
-        handler=new MyHandler();
+        handler = new MyHandler();
         adapterViewpager.setHandler(handler);
-        if(!fromMood){
+        if (!fromMood) {
             try {
                 getCommentsThread = new GetCommentsThread(handler, mainActivity.getPersonalInt("userid"));
-            }
-            catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             getCommentsThread.start();
-        }
-        else {
+        } else {
             try {
-                getCommentsThread = new GetCommentsThread(handler, mainActivity.getPersonalInt("userid"),contentids,contentCount);
-            }
-            catch (Exception e){
+                getCommentsThread = new GetCommentsThread(handler, mainActivity.getPersonalInt("userid"), contentids, contentCount);
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             getCommentsThread.start();
         }
-        final SwipeRefreshLayout swipeRefreshLayout=view.findViewById(R.id.refresher);
+        final SwipeRefreshLayout swipeRefreshLayout = view.findViewById(R.id.refresher);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                added=false;
+                added = false;
                 commentList.clear();
                 try {
                     getCommentsThread = new GetCommentsThread(handler, mainActivity.getPersonalInt("userid"));
-                }
-                catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
                 getCommentsThread.start();
                 swipeRefreshLayout.setRefreshing(false);
-                Toast.makeText(mainActivity,"刷新成功",Toast.LENGTH_SHORT).show();
+                Toast.makeText(mainActivity, "刷新成功", Toast.LENGTH_SHORT).show();
             }
         });
 
         return view;
     }
 
-    public static class MyHandler extends Handler{
+    public class MyHandler extends Handler {
         @Override
-        public void handleMessage(Message msg){
-            switch(msg.what){
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
                 case 1:
-                    if(!added){
-                        String tempContent, tempCommentInfo,tempUrl;
+                    if (!added) {
+                        String tempContent, tempCommentInfo, tempUrl;
                         int tempContentid;
                         boolean tempIsLiked;
-                        ResultSet resultSet=(ResultSet)msg.obj;
+                        ResultSet resultSet = (ResultSet) msg.obj;
                         try {
                             for (int i = 1; i < 20; i++) {
                                 resultSet.absolute(i);
                                 tempContent = resultSet.getString("content");
                                 tempUrl = resultSet.getString("url");
-                                tempContentid=resultSet.getInt("contentid");
-                                tempIsLiked=resultSet.getBoolean("isliked");
-                                tempCommentInfo = "在 "+resultSet.getString("singername")+"-"+resultSet.getString("songname")+" 后的热评";
-                                commentList.add(new Comment(tempContent, "T@", tempCommentInfo,tempUrl,tempContentid,tempIsLiked));
+                                tempContentid = resultSet.getInt("contentid");
+                                tempIsLiked = resultSet.getBoolean("isliked");
+                                tempCommentInfo = "在 " + resultSet.getString("singername") + "-" + resultSet.getString("songname") + " 后的热评";
+                                commentList.add(new Comment(tempContent, "T@", tempCommentInfo, tempUrl, tempContentid, tempIsLiked));
                             }
                             adapter.notifyDataSetChanged();
                         } catch (SQLException e) {
@@ -230,23 +260,24 @@ public class HomeFragment extends Fragment{
                 case 0:
                     break;
                 case 4:
-                    type=(String)msg.obj;
+//                    type="1";//先assign防止崩溃
+                    changer.changeVariable("type",msg.obj);//拿下！
                     break;
                 case 10://10号消息，从心情栏返回
                     commentList.clear();
-                    String tempContent, tempCommentInfo,tempUrl;
+                    String tempContent, tempCommentInfo, tempUrl;
                     int tempContentid;
                     boolean tempIsLiked;
-                    ResultSet resultSet=(ResultSet)msg.obj;
+                    ResultSet resultSet = (ResultSet) msg.obj;
                     try {
                         for (int i = 1; i < contentCount; i++) {
                             resultSet.absolute(i);
                             tempContent = resultSet.getString("content");
                             tempUrl = resultSet.getString("url");
-                            tempContentid=resultSet.getInt("contentid");
-                            tempIsLiked=resultSet.getBoolean("isliked");
-                            tempCommentInfo = "在 "+resultSet.getString("singername")+"-"+resultSet.getString("songname")+" 后的热评";
-                            commentList.add(new Comment(tempContent, "T@", tempCommentInfo,tempUrl,tempContentid,tempIsLiked));
+                            tempContentid = resultSet.getInt("contentid");
+                            tempIsLiked = resultSet.getBoolean("isliked");
+                            tempCommentInfo = "在 " + resultSet.getString("singername") + "-" + resultSet.getString("songname") + " 后的热评";
+                            commentList.add(new Comment(tempContent, "T@", tempCommentInfo, tempUrl, tempContentid, tempIsLiked));
                         }
                         adapter.notifyDataSetChanged();
                     } catch (SQLException e) {
@@ -257,25 +288,24 @@ public class HomeFragment extends Fragment{
         }
     }
 
-    public void addAd(){
-        View item1=getLayoutInflater().from(getActivity()).inflate(R.layout.image_item,null);
+    public void addAd() {
+        View item1 = getLayoutInflater().from(getActivity()).inflate(R.layout.image_item, null);
         viewList.add(item1);
-        ImageView imageView1=item1.findViewById(R.id.image_item1);
+        ImageView imageView1 = item1.findViewById(R.id.image_item1);
         imageView1.setImageResource(R.drawable.ada);
-        View item2=getLayoutInflater().from(getActivity()).inflate(R.layout.image_item,null);
+        View item2 = getLayoutInflater().from(getActivity()).inflate(R.layout.image_item, null);
         viewList.add(item2);
-        ImageView imageView2=item2.findViewById(R.id.image_item1);
+        ImageView imageView2 = item2.findViewById(R.id.image_item1);
         imageView2.setImageResource(R.drawable.adb);
-        View item3=getLayoutInflater().from(getActivity()).inflate(R.layout.image_item,null);
+        View item3 = getLayoutInflater().from(getActivity()).inflate(R.layout.image_item, null);
         viewList.add(item3);
-        ImageView imageView3=item3.findViewById(R.id.image_item1);
+        ImageView imageView3 = item3.findViewById(R.id.image_item1);
         imageView3.setImageResource(R.drawable.adc);
-        View item4=getLayoutInflater().from(getActivity()).inflate(R.layout.image_item,null);
+        View item4 = getLayoutInflater().from(getActivity()).inflate(R.layout.image_item, null);
         viewList.add(item4);
-        ImageView imageView4=item4.findViewById(R.id.image_item1);
+        ImageView imageView4 = item4.findViewById(R.id.image_item1);
         imageView4.setImageResource(R.drawable.add);
     }
-
 
 
     @Override
@@ -300,22 +330,23 @@ public class HomeFragment extends Fragment{
 //        }).start();
     }
 
-    public  void setFromMood(int [] contentids, int contentCount){
-        this.fromMood=true;
-        this.contentids=contentids;
-        this.contentCount=contentCount;
+    public void setFromMood(int[] contentids, int contentCount) {
+        this.fromMood = true;
+        this.contentids = contentids;
+        this.contentCount = contentCount;
     }
 
     public int stringToArray(String back)//返回个数
     {
-        int count=0;
-        int i=0;
-        String[] arrayStr=back.split(",");
-        while (i<arrayStr.length){
-            tempArray[i]=Integer.parseInt(arrayStr[i]);
+        int count = 0;
+        int i = 0;
+        String[] arrayStr = back.split(",");
+        while (i < arrayStr.length) {
+            tempArray[i] = Integer.parseInt(arrayStr[i]);
             i++;
             count++;
         }
         return count;
     }
+
 }

@@ -9,7 +9,6 @@
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
 
     <application
         android:allowBackup="true"
@@ -20,7 +19,8 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".WelcomeActivity"
-            android:label="Ta说">
+            android:label="Ta说"
+            android:theme="@style/NoTitleTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
