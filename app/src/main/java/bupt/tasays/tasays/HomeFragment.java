@@ -61,6 +61,7 @@ public class HomeFragment extends Fragment {
     int[] tempArray = new int[20];
     HomeFragment h = this;
 
+    String forSearch;
     public class Variablechanger{
         public Variablechanger(){}
         //使用变量封装实现监听
@@ -75,6 +76,18 @@ public class HomeFragment extends Fragment {
                     back = null;
                     homeFragment.setFromMood(tempArray, tempCount);
                     mainActivity.replaceFragment(homeFragment);
+                    break;
+                case "back_songs":
+                    back = (String) o;
+                    progressDialog.dismiss();
+                    if(mainActivity==null)
+                        mainActivity=(MainActivity)getActivity();
+                    Intent i=new Intent(mainActivity,SongsActivity.class);
+                    i.putExtra("back_songs",back);
+                    i.putExtra("search",forSearch);
+                    startActivity(i);
+                    back = null;
+
                     break;
                 case "type":
                     type=(String)o;
@@ -142,14 +155,15 @@ public class HomeFragment extends Fragment {
                     @Override
                     public void run() {
                         String tempString = WebService.executeGetIDs(content, "0");
-                        while (tempString == null) {
+                        forSearch=content;
+                        while (tempString==null) {
                             try {
                                 Thread.sleep(300);
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
                         }
-                        changer.changeVariable("back", tempString);
+                        changer.changeVariable("back_songs", tempString);
                     }
                 }).start();
                 progressDialog.setMessage("请求中，请稍候");

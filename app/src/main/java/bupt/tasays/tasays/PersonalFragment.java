@@ -44,7 +44,14 @@ public class PersonalFragment extends Fragment {
     private View fragmentView, view;
     private CircleImageView portrait;
     private Bitmap head;// 头像Bitmap
+    private int headid;
     private static String path = "/sdcard/myHead/";// sd路径
+
+    int [] heads={
+            R.drawable.p1,R.drawable.p2,R.drawable.p3,R.drawable.p4,R.drawable.p5,R.drawable.p6,R.drawable.p7,
+            R.drawable.p8,R.drawable.p9,R.drawable.p10,R.drawable.p11,R.drawable.p12,R.drawable.p13,R.drawable.p14,
+            R.drawable.p15,R.drawable.p16,R.drawable.p17,R.drawable.p18,R.drawable.p19,R.drawable.p20,R.drawable.p21
+    };
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.personal_layout, container, false);
@@ -57,6 +64,7 @@ public class PersonalFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if (!editFlag) {
+                    personaledit=new PersonalEdit();
                     replaceFragment(personaledit);
                     floatingActionButton.setImageResource(R.drawable.check);
                     editFlag = !editFlag;
@@ -91,6 +99,9 @@ public class PersonalFragment extends Fragment {
 
     private void refresh2() {
         try {
+            if(mainActivity==null)
+                mainActivity=(MainActivity)getActivity();
+            headid=mainActivity.getPersonalInt("headid");
             signature = view.findViewById(R.id.signature);
             phone = view.findViewById(R.id.user_id);
             mainActivity = (MainActivity) getActivity();
@@ -117,13 +128,13 @@ public class PersonalFragment extends Fragment {
     }
 
     public void initPortrait(){
-        Bitmap bt = BitmapFactory.decodeFile(path+"head.jpg");
-        if(bt!=null){
-            Drawable drawable = new BitmapDrawable(bt);
+        try {
+            if(mainActivity==null)
+                mainActivity=(MainActivity)getActivity();
+            portrait.setImageResource(getPortrait(mainActivity.getPersonalInt("headid")));
         }
-        else
-        {
-            //Logic of downloading portrait from server.
+        catch (Exception e){
+            e.printStackTrace();
         }
         portrait.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -136,42 +147,30 @@ public class PersonalFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
-            case 1:
-                if (resultCode == RESULT_OK) {
-                    cropPhoto(data.getData());// 裁剪图片
-                }
-
-                break;
-            case 2:
-                if (resultCode == RESULT_OK) {
-                    File temp = new File(Environment.getExternalStorageDirectory() + "/head.jpg");
-                    cropPhoto(Uri.fromFile(temp));// 裁剪图片
-                }
-
-                break;
-            case 3:
-                if (data != null) {
-                    Bundle extras = data.getExtras();
-                    head = extras.getParcelable("data");
-                    if (head != null) {
-                        /**
-                         * 上传服务器代码
-                         */
-                        setPicToView(head);// 保存在SD卡中
-                        portrait.setImageBitmap(head);// 用ImageView显示出来
-                    }
-                }
-                break;
             case 9://头像选择完成
+                if(data==null)
+                    return;
                 int toReturn=data.getIntExtra("new_head",0);
                 portrait.setImageResource(toReturn);
+                int newhead=22;
+                for(int i=0;i<21;i++)
+                    if(heads[i]==toReturn)
+                        newhead=i+1;
+                headid=newhead;
+                if(mainActivity==null)
+                    mainActivity=(MainActivity)mainActivity;
+                mainActivity.setHeadId(headid);
+                PersonalFragment personalFragment=new PersonalFragment();
+                mainActivity.personalFragment=personalFragment;
+                mainActivity.replaceFragment(personalFragment);
+                new Thread(new updateThread()).start();
                 break;
             default:
                 break;
 
         }
-        super.onActivityResult(requestCode, resultCode, data);
     }
 
     /**
@@ -216,6 +215,20 @@ public class PersonalFragment extends Fragment {
                 e.printStackTrace();
             }
         }
+    }
+
+    public int getPortrait(int headid){
+
+        try {
+            if(mainActivity==null)
+                mainActivity=(MainActivity)getActivity();
+            if(mainActivity.getPersonalInt("headid")!=22)
+            return heads[mainActivity.getPersonalInt("headid")-1];
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return R.drawable.user_fill;
     }
 }
 

@@ -20,6 +20,7 @@
         <activity
             android:name=".WelcomeActivity"
             android:label="Ta说"
+            android:screenOrientation="portrait"
             android:theme="@style/NoTitleTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,13 +28,32 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".WebActivity" />
-        <activity android:name=".RegisterActivity" />
-        <activity android:name=".MainActivity" />
-        <activity android:name=".TimePickerTest" />
-        <activity android:name=".SpecialActivity" />
-        <activity android:name=".LocalHeadsActivity"></activity>
+        <activity
+            android:name=".LoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".WebActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".RegisterActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".TimePickerTest"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SpecialActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".LocalHeadsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SongsActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".CollectionActivity"></activity>
     </application>
 
 </manifest>

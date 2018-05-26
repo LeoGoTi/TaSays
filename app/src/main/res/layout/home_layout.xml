@@ -56,7 +56,8 @@
                             android:layout_weight="1"
                             android:background="@null"
                             android:gravity="start|center_vertical"
-                            android:hint="发现Ta说" />
+                            android:hint="发现Ta说"
+                            android:singleLine="true"/>
 
                         <FrameLayout
                             android:id="@+id/search_home_button"

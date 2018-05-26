@@ -28,7 +28,6 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
     private List<Comment> mCommentList;
     private MainActivity mainActivity;
     boolean isSpecial=false;
-    private SpecialActivity specialActivity;
 
     static class ViewHolder extends RecyclerView.ViewHolder
     {
@@ -117,7 +116,13 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         holder.share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(view.getContext(),"分享一下",Toast.LENGTH_SHORT).show();
+//                Toast.makeText(view.getContext(),"分享一下",Toast.LENGTH_SHORT).show();
+                Intent intent=new Intent(Intent.ACTION_SEND);
+
+                intent.setType("text/plain");
+                intent.putExtra(Intent.EXTRA_SUBJECT, "分享");
+                intent.putExtra(Intent.EXTRA_TEXT,holder.commentContent.getText().toString());
+                mainActivity.startActivity(Intent.createChooser(intent, mainActivity.getTitle()));
             }
         });
     }

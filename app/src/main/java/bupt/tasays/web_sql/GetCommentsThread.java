@@ -15,6 +15,7 @@ public class GetCommentsThread extends Thread{
     private int FAILURE=0;
     private int SUCCESS_IDS=10;
     private DBManager dbManager;
+    private Boolean collection=false;
     String sql;
     String type=null;//用于专题的获取
     int userid;
@@ -23,6 +24,11 @@ public class GetCommentsThread extends Thread{
     public GetCommentsThread(Handler handler,int userid){
         this.handler=handler;
         this.userid=userid;
+    }
+    public GetCommentsThread(Handler handler,int userid,boolean collection){
+        this.handler=handler;
+        this.userid=userid;
+        this.collection=collection;
     }
     public GetCommentsThread(Handler handler,String type,int userid){
         this.handler=handler;
@@ -40,7 +46,11 @@ public class GetCommentsThread extends Thread{
     @Override
     public void run(){
         if(contentCount==-1) {
-            if (type == null)
+            if(collection)
+                sql = "select * from\n" +
+                        "  (SELECT content,songname,singername,url,contentid,exists(select * from collection where userid="+userid+" and collection.contentid=comments.contentid) as isliked from comments,songinfo where comments.songid=songinfo.songid order by rand())\n" +
+                        "as T having isliked=1;";
+            else if (type == null)
                 sql = "SELECT content,songname,singername,url,contentid,exists(select * from collection where userid=" + userid + " and collection.contentid=comments.contentid) as isliked\n" +
                         "from comments,songinfo where comments.songid=songinfo.songid order by rand() LIMIT 20;";
             else

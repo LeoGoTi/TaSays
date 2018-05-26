@@ -1,10 +1,10 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/main_mood_frame"
+    android:id="@+id/special_frame"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/grey200"
-    android:fitsSystemWindows="true">
+    android:background="#A6C6EF"
+    android:fitsSystemWindows="false">
 
 
     <android.support.design.widget.CoordinatorLayout
@@ -14,15 +14,15 @@
 
         <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
-
                 <android.support.v7.widget.CardView
-                    android:id="@+id/cardView"
+                    android:id="@+id/cardView1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
@@ -34,23 +34,23 @@
                         android:layout_height="wrap_content">
 
                         <TextView
-                            android:id="@+id/whatever3"
+                            android:id="@+id/whatever4"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
                             android:layout_marginStart="10dp"
                             android:layout_marginTop="5dp"
-                            android:text="TaSays 心情轴"
+                            android:text="评论收藏"
                             android:textSize="25sp" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_below="@id/whatever3"
+                            android:layout_below="@id/whatever4"
                             android:layout_marginBottom="5dp"
                             android:layout_marginLeft="10dp"
                             android:layout_marginStart="10dp"
-                            android:text="--在记忆即将淡漠的时候\n--来把这些曾经重新回味"
+                            android:text="--爱与不爱，就在这里"
                             android:textColor="@color/grey400"
                             android:textSize="14sp"
                             android:textStyle="italic" />
@@ -58,24 +58,49 @@
                 </android.support.v7.widget.CardView>
 
                 <android.support.v7.widget.RecyclerView
-                    android:id="@+id/mood_recycler"
+                    android:id="@+id/collection_recycler"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:minHeight="30dp">
+                    android:layout_height="wrap_content">
 
                 </android.support.v7.widget.RecyclerView>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="2px"
+                        android:layout_marginBottom="15dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_weight="1"
+                        android:background="@color/grey800" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="0"
+                        android:gravity="center"
+                        android:text="没有更多内容了哦～"
+                        android:textSize="15sp" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="2px"
+                        android:layout_marginBottom="15dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_weight="1"
+                        android:background="@color/grey800" />
+
+                </LinearLayout>
 
             </LinearLayout>
+
         </android.support.v4.widget.NestedScrollView>
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/mood_write"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/pencil1"
-            app:backgroundTint="@color/grey50"
-            app:layout_anchor="@id/cardView"
-            app:layout_anchorGravity="right|center_vertical"
-            android:layout_marginRight="20dp"/>
     </android.support.design.widget.CoordinatorLayout>
 </FrameLayout>

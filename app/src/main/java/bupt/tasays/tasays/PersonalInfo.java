@@ -23,7 +23,7 @@ import bupt.tasays.settings.Settings;
 public class PersonalInfo extends Fragment
 {
 
-    private TextView contact,clean,about;
+    private TextView contact,clean,about,collection;
     private TextView nickname,signature,userId,birth,constellation,gender;
     CardView logout;
     private View view;
@@ -36,6 +36,7 @@ public class PersonalInfo extends Fragment
         clean=view.findViewById(R.id.clean);
         about=view.findViewById(R.id.about);
         logout=view.findViewById(R.id.logout);
+        collection=view.findViewById(R.id.collection);
         contact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -51,7 +52,14 @@ public class PersonalInfo extends Fragment
         about.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(),"项目组长：\n    张欣悦\n组员：\n    郭聚川\n    马祁\n    刘泳君\n    刘国维",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(),
+                               "项目组长：\n" +
+                                    "    张欣悦\n" +
+                                    "组员：\n" +
+                                       "    郭聚川\n" +
+                                       "    马祁  \n" +
+                                       "    刘泳君\n" +
+                                       "    刘国维",Toast.LENGTH_SHORT).show();
             }
         });
         mainActivity=(MainActivity)getActivity();
@@ -89,6 +97,19 @@ public class PersonalInfo extends Fragment
                     }
                 });
                 dialog.show();
+            }
+        });
+        collection.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(mainActivity,CollectionActivity.class);
+                try{
+                    intent.putExtra("userid",mainActivity.getPersonalInt("userid"));
+                }
+                catch (Exception e){
+                    e.printStackTrace();
+                }
+                startActivity(intent);
             }
         });
         return view;

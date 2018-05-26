@@ -40,7 +40,6 @@ public class MoodFragment extends Fragment {
     private static List<MoodLine> moodLineListTemp = new ArrayList<>();
     static MoodLineAdapter adapter;
     FloatingActionButton floatingActionButton;
-    FrameLayout search;
     RecyclerView recyclerView;
     MainActivity mainActivity;
     private static Handler handler;
@@ -65,12 +64,12 @@ public class MoodFragment extends Fragment {
                 showDialog();
             }
         });
-        search = view.findViewById(R.id.search_mood_button);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         handler = new MyHandler();
         adapter = new MoodLineAdapter(moodLineList, handler);
         recyclerView.setAdapter(adapter);
+        recyclerView.setNestedScrollingEnabled(false);
         refreshMoodLine();
 //        new Thread(new Runnable() {
 //            @Override
@@ -173,7 +172,7 @@ public class MoodFragment extends Fragment {
                                 @Override
                                 public void run() {
                                     try {
-                                        String tempString = WebService.executeGetIDs(Integer.toString(mainActivity.getPersonalInt("userid")), "1");//这一段都要放到心情那边的//改成id
+                                        String tempString = WebService.executeGetIDs(Integer.toString(mainActivity.getPersonalInt("userid")), "1");
                                         if (tempString != null) {
                                             changer.variableChanger("back",tempString);
                                         }
@@ -240,8 +239,7 @@ public class MoodFragment extends Fragment {
                         e.printStackTrace();
                     }
                     break;
-                case 0:
-                    break;
+                case 0://删除失败
                 case 4://4号消息：传送成功
                 case 3://3号消息：删除成功
                     changer.variableChanger("needRefresh",true);
@@ -294,6 +292,8 @@ public class MoodFragment extends Fragment {
                                 public void onClick(View view) {
                                     HomeFragment homeFragment = new HomeFragment();
                                     mainActivity.homeFragment = homeFragment;
+                                    if(back.equals("服务器连接超时..."))
+                                        return;
                                     int tempCount = stringToArray(back);
                                     back = null;
                                     homeFragment.setFromMood(tempArray, tempCount);

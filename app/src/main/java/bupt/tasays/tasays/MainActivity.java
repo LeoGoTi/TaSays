@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -22,12 +23,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     HomeFragment homeFragment = new HomeFragment();
     MoodFragment moodFragment = new MoodFragment();
     PersonalFragment personalFragment = new PersonalFragment();
+    private Boolean toExit=false;
     private String account;
     private JSONObject jsonObject;
     //个人信息
     private String nickname="设置用户名", introduction="无", phonenum="未设置";
     private String gender="1";
     private String constellation = "摩羯座";
+    private int headId=22;
     private int userid;
     private int birthY=1990, birthM=1, birthD=1;
 
@@ -36,17 +39,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_layout);
         p1 = findViewById(R.id.main_home_p);
-        //p2 = findViewById(R.id.main_music_p);
         p3 = findViewById(R.id.main_mood_p);
         p4 = findViewById(R.id.main_personal_p);
 
         i1 = findViewById(R.id.main_home);
-        //i2 = findViewById(R.id.main_music);
         i3 = findViewById(R.id.main_mood);
         i4 = findViewById(R.id.main_personal);
 
         i1.setOnClickListener(this);
-        //i2.setOnClickListener(this);
         i3.setOnClickListener(this);
         i4.setOnClickListener(this);
 
@@ -132,6 +132,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             birthY = temp / 10000;
             birthM = (temp - 10000 * birthY) / 100;
             birthD = temp % 100;
+            headId = json.getInt("headid");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -166,6 +167,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 return birthD;
             case "userid":
                 return userid;
+            case "headid":
+                return headId;
             default:
                 throw new Exception();
         }
@@ -198,6 +201,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void setNickname(String nickname) {
         this.nickname = nickname;
     }
+
+    public void setHeadId(int headId){this.headId=headId;}
 
     public void setConstellation(String constellation) {
         this.constellation = constellation;
@@ -258,7 +263,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                "&nickname="+nickname+
                "&introduction="+introduction+
                "&birth="+tempBirth+
-               "&phonenum="+phonenum;
+               "&phonenum="+phonenum+
+               "&headid="+Integer.toString(headId);
     }
 
+    @Override
+    public void onBackPressed(){
+        if(toExit)
+            finish();
+        else {
+            toExit = !toExit;
+            Toast.makeText(this,"再点一次退出",Toast.LENGTH_SHORT).show();
+        }
+    }
 }

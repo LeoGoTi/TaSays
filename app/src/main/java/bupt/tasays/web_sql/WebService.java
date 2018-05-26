@@ -3,11 +3,16 @@ package bupt.tasays.web_sql;
 /**
  * Created by root on 18-3-10.
  */
+import android.util.Log;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
+
+import static android.content.ContentValues.TAG;
 
 public class WebService {
     // IP地址
@@ -197,9 +202,8 @@ public class WebService {
         try {
             // 用户名 密码
             // URL 地址
-            String path = "http://" + IP + "/Server/TestLet?content="+content+
-                    "&type="+type;
-
+            String path = "http://" + IP + "/Server/TestLet?content="+URLEncoder.encode(content,"UTF-8")+
+                    "&type="+ type;
             conn = (HttpURLConnection) new URL(path).openConnection();
             conn.setConnectTimeout(30000); // 设置超时时间
             conn.setReadTimeout(30000);
@@ -223,9 +227,12 @@ public class WebService {
 //            }).start();
 //
 //            while(!tenPassed);
-            if (conn.getResponseCode() == 200) {
+            if (conn.getResponseCode()== 200) {
                 is = conn.getInputStream();
-                return parseInfo(is);
+                String buffer;
+                buffer=parseInfo(is);
+                Log.w(TAG, "executeGetIDs: "+buffer );
+                return buffer;
             }
             return null;
 

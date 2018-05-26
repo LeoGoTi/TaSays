@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="250dp"
             android:fitsSystemWindows="true"
-            android:background="@drawable/port_gaussion">
+            android:background="@color/orange400">
 
             <android.support.design.widget.CollapsingToolbarLayout
                 android:id="@+id/collapsing_toolbar"
@@ -56,7 +56,7 @@
                         android:layout_below="@id/portrait"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="5dp"
-                        android:text="13011192929"
+                        android:text=""
                         android:textSize="20dp" />
 
                     <TextView
@@ -66,7 +66,7 @@
                         android:layout_below="@id/user_id"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="3dp"
-                        android:text="还有谁在快乐的，继续歌唱  "
+                        android:text=""
                         android:textColor="@color/grey200"
                         android:textSize="15dp" />
                 </RelativeLayout>

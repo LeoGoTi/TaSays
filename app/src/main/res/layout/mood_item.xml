@@ -47,7 +47,7 @@
         android:gravity="center"
         android:textColor="@color/cyan50"
         android:textSize="18sp"
-        android:layout_margin="5dp">
+        android:layout_marginLeft="5dp">
 
     </TextView>
     <ImageView
