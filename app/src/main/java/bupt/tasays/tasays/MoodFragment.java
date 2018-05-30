@@ -277,9 +277,8 @@ public class MoodFragment extends Fragment {
         public void variableChanger(String name, Object o) {
             switch (name) {
                 case "needRefresh":
-                    if((Boolean)o)
-                        refreshMoodLine();
-                    needRefresh = false;
+                    refreshMoodLine();
+                    needRefresh = (Boolean)o;
                     break;
                 case "back":
                     if(o==null)

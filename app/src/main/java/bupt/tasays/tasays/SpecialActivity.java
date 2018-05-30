@@ -70,7 +70,7 @@ public class SpecialActivity extends AppCompatActivity {
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        adapter=new CommentAdapter(commentList,true);
+        adapter=new CommentAdapter(commentList,1);
         recyclerView.setAdapter(adapter);
         handler=new MyHandler();
         getCommentsThread=new GetCommentsThread(handler,type,userid);
@@ -88,6 +88,7 @@ public class SpecialActivity extends AppCompatActivity {
                         ResultSet resultSet=(ResultSet)msg.obj;
                         try {
                             resultSet.absolute(1);
+                            commentList.clear();
                             do {
                                 tempContent = resultSet.getString("content");
                                 tempUrl = resultSet.getString("url");

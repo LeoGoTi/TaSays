@@ -1,5 +1,6 @@
 package bupt.tasays.list_adapter;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import com.ldoublem.thumbUplib.ThumbUpView;
 
 import java.util.List;
 
+import bupt.tasays.tasays.CollectionActivity;
 import bupt.tasays.tasays.MainActivity;
 import bupt.tasays.tasays.R;
 import bupt.tasays.tasays.SpecialActivity;
@@ -26,8 +28,8 @@ import bupt.tasays.web_sql.CollectionThread;
 
 public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHolder> {
     private List<Comment> mCommentList;
-    private MainActivity mainActivity;
-    boolean isSpecial=false;
+    private Context mainActivity;
+    int activityType =0;//0默认，1为specia，2为collection
 
     static class ViewHolder extends RecyclerView.ViewHolder
     {
@@ -55,10 +57,10 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         mCommentList=commentList;
     }
 
-    public CommentAdapter(List<Comment> commentList,boolean isSpecial)
+    public CommentAdapter(List<Comment> commentList,int activityType)
     {
         mCommentList=commentList;
-        this.isSpecial=isSpecial;
+        this.activityType = activityType;
     }
 
     @Override
@@ -74,7 +76,9 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
     public void onBindViewHolder(final ViewHolder holder, int position)
     {
         final Comment comment=mCommentList.get(position);
-        if(!isSpecial){
+        if(!(activityType==1)){
+            if(activityType==2)
+                mainActivity=(CollectionActivity)holder.love.getContext();
             if(mainActivity==null)
                 mainActivity=(MainActivity) holder.love.getContext();
         }
@@ -97,10 +101,18 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             @Override
             public void like(boolean like) {
                     Toast.makeText(holder.love.getContext(),like?"收藏成功":"取消收藏",Toast.LENGTH_SHORT).show();
-                    if(!isSpecial){
+                    if(!(activityType==1)){
                         try{
-                            int userid=mainActivity.getPersonalInt("userid");
-                            new Thread(new CollectionThread(comment.getContentid(),userid,like)).start();
+                            if(activityType!=2){
+                                MainActivity temp=(MainActivity)mainActivity;
+                                int userid=temp.getPersonalInt("userid");
+                                new Thread(new CollectionThread(comment.getContentid(),userid,like)).start();
+                            }
+                            else{
+                                CollectionActivity temp=(CollectionActivity)mainActivity;
+                                int userid=temp.getUserid();
+                                new Thread(new CollectionThread(comment.getContentid(),userid,like)).start();
+                            }
                         }
                         catch(Exception e){
                             e.printStackTrace();
@@ -122,7 +134,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
                 intent.setType("text/plain");
                 intent.putExtra(Intent.EXTRA_SUBJECT, "分享");
                 intent.putExtra(Intent.EXTRA_TEXT,holder.commentContent.getText().toString());
-                mainActivity.startActivity(Intent.createChooser(intent, mainActivity.getTitle()));
+                mainActivity.startActivity(Intent.createChooser(intent, "TaSays"));
             }
         });
     }

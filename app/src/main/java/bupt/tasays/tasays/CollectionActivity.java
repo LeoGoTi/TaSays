@@ -33,10 +33,11 @@ public class CollectionActivity extends AppCompatActivity {
         recyclerView=findViewById(R.id.collection_recycler);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        adapter=new CommentAdapter(commentList,true);
+        adapter=new CommentAdapter(commentList,2);
         recyclerView.setAdapter(adapter);
         handler=new MyHandler();
         GetCommentsThread getCommentsThread=new GetCommentsThread(handler,userid,true);
+        commentList.clear();
         getCommentsThread.start();
     }
 
@@ -50,6 +51,7 @@ public class CollectionActivity extends AppCompatActivity {
                     ResultSet resultSet = (ResultSet) msg.obj;
                     try {
                         resultSet.absolute(1);
+                        commentList.clear();
                         do {
                             tempContent = resultSet.getString("content");
                             tempUrl = resultSet.getString("url");
@@ -60,11 +62,21 @@ public class CollectionActivity extends AppCompatActivity {
                         adapter.notifyDataSetChanged();
                     } catch (SQLException e) {
                         e.printStackTrace();
+                        commentList=new ArrayList<>();
                     }
                     break;
                 case 0:
                     break;
             }
         }
+    }
+
+    public int getUserid(){
+        return userid;
+    }
+
+    @Override
+    public void onBackPressed(){
+        finish();
     }
 }
